@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
+import GallerySidebar from './GallerySidebar';
 import data from '../../data';
 import { Book } from '../../data.model';
 
@@ -11,7 +12,7 @@ const Gallery: FC = () => {
         <h2 className="gallery__title-text">My books</h2>
       </div>
       <div className="gallery__wrapper">
-        <div className="sidebar__container">Sidebar component</div>
+        <GallerySidebar />
         <div className="gallery__container">
           {data.map((el: Book) => {
             return (
