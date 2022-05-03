@@ -273,7 +273,7 @@ const data = [
     'Additional Authors': '',
     ISBN: '1857989775',
     ISBN13: 9781857989779,
-    'My Rating': 5,
+    'My Rating': 2,
     'Average Rating': 4.02,
     Publisher: 'Victor Gollancz',
     Binding: 'Paperback',

@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { StyledGalleryItem } from './GalleryItem.styles';
+import StarRating from './StarRating';
+import emptyCover from '../../assets/images/emptyCover_sm.png';
 
 type GalleryItemProps = {
   key: number;
@@ -22,9 +24,18 @@ const GalleryItem: FC<GalleryItemProps> = ({
       <div className="gallery-item__wrapper">
         <div className="gallery-item__image">
           <img
-            src={`https://covers.openlibrary.org/b/isbn/${isbn13}-M.jpg`}
+            src={`https://covers.openlibrary.org/b/isbn/${isbn13}-M.jpg?default=false`}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src=emptyCover;
+            }}
             alt="book cover"
           />
+          {/* <img
+            src={emptyCover}
+            alt="book cover"
+          /> */}
+          
         </div>
         <div className="gallery-item__title">
           <span>
@@ -34,9 +45,7 @@ const GalleryItem: FC<GalleryItemProps> = ({
         <div className="gallery-item__author">
           <span>{author}</span>
         </div>
-        <div className="gallery-item__rating">
-          <span>My rating: {rating}</span>
-        </div>
+          <StarRating rating={rating}/>
         <div className="gallery-item__readDate">
           <span>Read date: {readDate}</span>
         </div>
