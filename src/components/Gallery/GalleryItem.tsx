@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { StyledGalleryItem } from './GalleryItem.styles';
 import StarRating from './StarRating';
 import emptyCover from '../../assets/images/emptyCover_sm.png';
+import  dayjs from 'dayjs';
 
 type GalleryItemProps = {
   key: number;
@@ -47,7 +48,7 @@ const GalleryItem: FC<GalleryItemProps> = ({
         </div>
           <StarRating rating={rating}/>
         <div className="gallery-item__readDate">
-          <span>Read date: {readDate}</span>
+          <span>Read date: {dayjs(readDate).format('DD.MM.YYYY')}</span>
         </div>
       </div>
     </StyledGalleryItem>
