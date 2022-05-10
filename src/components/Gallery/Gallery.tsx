@@ -1,20 +1,51 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
-import GallerySidebar from './GallerySidebar';
+import Sidebar from './Sidebar';
 import data from '../../data';
 import { Book } from '../../data.model';
 
+export type SortType =
+  | 'Book Id'
+  | 'Title'
+  | 'Author'
+  | 'My Rating'
+  | 'Date Read';
+
 const Gallery: FC = () => {
+  const [books, setBooks] = useState<Book[]>(data);
+
+  const handleSortTypeChange = (sortProperty: SortType) => {
+    //if sort desc order should be set te negative
+    let order = 1;
+    if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
+      console.log('reverse order!')
+      order = -1;
+    }
+    setBooks((books) => {
+      const sorted = [...books].sort((a, b) => {
+        if (a[sortProperty] < b[sortProperty]) {
+          return -order;
+        }
+        if (a[sortProperty] > b[sortProperty]) {
+          return order;
+        }
+        return 0;
+      });
+
+      return sorted;
+    });
+  };
+
   return (
     <Wrapper className="gallery">
       <div className="gallery__title">
         <h2 className="gallery__title-text">My books</h2>
       </div>
       <div className="gallery__wrapper">
-        <GallerySidebar />
+        <Sidebar handleSortTypeChange={handleSortTypeChange} />
         <div className="gallery__container">
-          {data.map((el: Book) => {
+          {books.map((el) => {
             return (
               <GalleryItem
                 key={el['Book Id']}

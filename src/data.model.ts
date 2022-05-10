@@ -5,5 +5,6 @@ export interface Book {
   'My Rating': number;
   ISBN13: number;
   'Date Read': string;
+  'Author l-f': string;
   // [x: string | number | symbol]: unknown;
 }
