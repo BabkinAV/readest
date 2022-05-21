@@ -15,11 +15,12 @@ export type SortType =
 const Gallery: FC = () => {
   const [books, setBooks] = useState<Book[]>(data);
 
+  const authors = Array.from(new Set(books.map((item) => item['Author l-f'])));
+  
   const handleSortTypeChange = (sortProperty: SortType) => {
     //if sort desc order should be set te negative
     let order = 1;
     if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
-      console.log('reverse order!')
       order = -1;
     }
     setBooks((books) => {
@@ -43,7 +44,10 @@ const Gallery: FC = () => {
         <h2 className="gallery__title-text">My books</h2>
       </div>
       <div className="gallery__wrapper">
-        <Sidebar handleSortTypeChange={handleSortTypeChange} />
+        <Sidebar
+          handleSortTypeChange={handleSortTypeChange}
+          authors={authors}
+        />
         <div className="gallery__container">
           {books.map((el) => {
             return (
