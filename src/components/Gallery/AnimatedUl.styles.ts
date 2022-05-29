@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { TransitionStatus } from "react-transition-group";
+
 
 interface AnimatedUlProps {
-  transitionState: string;
+  transitionState: TransitionStatus;
   UlHeight: number | null;
 }
 

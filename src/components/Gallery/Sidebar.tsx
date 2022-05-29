@@ -35,6 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ handleSortTypeChange, authors }) => {
 
         </div>
       </div>
+      
       <h3>Choose filters:</h3>
       <FilterAuthor authors={authors}/>
       <div style={{marginTop: '50px'}}>Ratings filter</div>
