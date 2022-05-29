@@ -5,6 +5,7 @@ import { StyledSidebar } from './Sidebar.styles';
 
 import { SortType } from './Gallery';
 import FilterAuthor from './FilterAuthor';
+import AppliedFilters from './AppliedFilters';
 
 type SidebarProps = {
   handleSortTypeChange: (sortType: SortType) => void;
@@ -14,6 +15,7 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({ handleSortTypeChange, authors }) => {
   return (
     <StyledSidebar className="sidebar">
+      <AppliedFilters />
       <div className="sort">
         <label className="sort__label" htmlFor="sort-select">
           Sort by:

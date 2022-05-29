@@ -1,9 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { StyledAppliedFilters } from './AppliedFilters.styles';
 
 const AppliedFilters = () => {
   return (
-    <div>AppliedFilters</div>
-  )
-}
+    <StyledAppliedFilters>
+      <h3>Applied Filters</h3>
+      <div className="set-filter">
+        <div className="set-filter__item">
+          <span>Sanderson, Brandon</span>
+        </div>
+      </div>
+    </StyledAppliedFilters>
+  );
+};
 
-export default AppliedFilters
+export default AppliedFilters;
