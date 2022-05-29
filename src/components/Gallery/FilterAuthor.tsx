@@ -1,12 +1,16 @@
-import React, { FC, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import  { FC, useState } from 'react';
+import { Transition } from 'react-transition-group';
 import { StyledFilterAuthor } from './FilterAuthor.styles';
+import {AnimatedUl} from './AnimatedUl.styles'
 
 type FilterAuthorProps = {
   authors: string[];
 };
 
+
+
 const FilterAuthor: FC<FilterAuthorProps> = ({ authors }) => {
+  
   const [
     additionalAuthorsSegmentsIsShown,
     setAdditionalAuthorsSegmentsIsShown,
@@ -26,20 +30,35 @@ const FilterAuthor: FC<FilterAuthorProps> = ({ authors }) => {
               </li>
             ))}
           </ul>
-          <CSSTransition
+         
+          <Transition
             in={additionalAuthorsSegmentsIsShown}
-            timeout={600}
+            timeout={{
+              appear: 1000,
+              enter: 0,
+              exit: 1000,
+            }}
             classNames="filterAuthor__list"
             unmountOnExit
+            mountOnEnter
           >
-            <ul className="filterAuthor__list">
-              {authors.slice(5).map((el) => (
-                <li key={authors.indexOf(el)}>
-                  <span>{el}</span>
-                </li>
-              ))}
-            </ul>
-          </CSSTransition>
+            {(state) => {
+              const ulHeight: number = 170; //height of the hidden Author section
+              return (
+                <AnimatedUl
+                  className="filterAuthor__list"
+                  transitionState={state}
+                  UlHeight={ulHeight}
+                >
+                  {authors.slice(5).map((el) => (
+                    <li key={authors.indexOf(el)}>
+                      <span>{el}</span>
+                    </li>
+                  ))}
+                </AnimatedUl>
+              );
+            }}
+          </Transition>
         </div>
         <div className="filterAuthor__trigger">
           <span onClick={() => onMoreClickHandler()}>

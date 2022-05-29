@@ -36,21 +36,5 @@ export const StyledFilterAuthor = styled.div`
 
         text-decoration: none;
       }
-      &-enter {
-        max-height: 0;
-        transition: max-height 600ms;
-        overflow: hidden;
-      }
-      &-enter-active {
-        max-height: 1500px;
-      }
-      &-exit {
-        max-height: 1500px;
-      }
-      &-exit-active {
-        max-height: 0;
-        transition: max-height 600ms;
-        overflow: hidden;
-      }
     }
 `;
