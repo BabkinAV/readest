@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyledAppliedFilters } from './AppliedFilters.styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AppliedFilters = () => {
   return (
@@ -8,6 +9,7 @@ const AppliedFilters = () => {
       <div className="set-filter">
         <div className="set-filter__item">
           <span>Sanderson, Brandon</span>
+          <FontAwesomeIcon icon={['fas', 'xmark']} />
         </div>
       </div>
     </StyledAppliedFilters>
