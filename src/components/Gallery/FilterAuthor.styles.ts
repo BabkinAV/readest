@@ -26,6 +26,11 @@ export const StyledFilterAuthor = styled.div`
     }
     .filterAuthor__trigger {
       font-weight: 600;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+
     }
     .filterAuthor__list {
       margin: 0;
@@ -34,7 +39,9 @@ export const StyledFilterAuthor = styled.div`
       & li {
         padding: 3px 0;
 
-        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 `;

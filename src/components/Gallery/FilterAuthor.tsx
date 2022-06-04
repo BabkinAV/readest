@@ -5,11 +5,12 @@ import {AnimatedUl} from './AnimatedUl.styles'
 
 type FilterAuthorProps = {
   authors: string[];
+  onAuthorClick: (p:string) => void;
 };
 
 
 
-const FilterAuthor: FC<FilterAuthorProps> = ({ authors }) => {
+const FilterAuthor: FC<FilterAuthorProps> = ({ authors, onAuthorClick }) => {
   
   const [
     additionalAuthorsSegmentsIsShown,
@@ -51,7 +52,7 @@ const FilterAuthor: FC<FilterAuthorProps> = ({ authors }) => {
                   UlHeight={ulHeight}
                 >
                   {authors.slice(5).map((el) => (
-                    <li key={authors.indexOf(el)}>
+                    <li key={authors.indexOf(el)} onClick={()=> onAuthorClick(el)}>
                       <span>{el}</span>
                     </li>
                   ))}

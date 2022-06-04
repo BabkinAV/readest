@@ -8,3 +8,8 @@ export interface Book {
   'Author l-f': string;
   // [x: string | number | symbol]: unknown;
 }
+
+export interface AppliedFilter {
+  category: 'author' | 'rating' | 'year';
+  value: string;
+}

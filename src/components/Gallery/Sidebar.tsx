@@ -6,23 +6,36 @@ import { StyledSidebar } from './Sidebar.styles';
 import { SortType } from './Gallery';
 import FilterAuthor from './FilterAuthor';
 import AppliedFilters from './AppliedFilters';
+import { AppliedFilter } from '../../data.model';
 
 type SidebarProps = {
   handleSortTypeChange: (sortType: SortType) => void;
   authors: string[];
+  appliedFilters: AppliedFilter[];
+  handleXmarkClick: (p:string) => void;
+  handleAuthorClick: (p:string) => void;
 };
 
-const Sidebar: FC<SidebarProps> = ({ handleSortTypeChange, authors }) => {
+const Sidebar: FC<SidebarProps> = ({
+  handleSortTypeChange,
+  authors,
+  appliedFilters,
+  handleXmarkClick,
+  handleAuthorClick
+}) => {
   return (
     <StyledSidebar className="sidebar">
-      <AppliedFilters />
+      {(appliedFilters.length > 0) && <AppliedFilters
+        appliedFilters={appliedFilters}
+        handleXmarkClick={handleXmarkClick}
+      />}
       <div className="sort">
         <label className="sort__label" htmlFor="sort-select">
           Sort by:
         </label>
 
         <div className="sort__select">
-        <FontAwesomeIcon icon={['fas', 'caret-down']} />
+          <FontAwesomeIcon icon={['fas', 'caret-down']} />
           <select
             name="sort__dropdown"
             id="sort-select"
@@ -34,14 +47,13 @@ const Sidebar: FC<SidebarProps> = ({ handleSortTypeChange, authors }) => {
             <option value="My Rating">Rating</option>
             <option value="Date Read">Read Date</option>
           </select>
-
         </div>
       </div>
-      
+
       <h3>Choose filters:</h3>
-      <FilterAuthor authors={authors}/>
-      <div style={{marginTop: '50px'}}>Ratings filter</div>
-      <div style={{marginTop: '50px'}}>Read Year filter</div>
+      <FilterAuthor authors={authors} onAuthorClick={handleAuthorClick}/>
+      <div style={{ marginTop: '50px' }}>Ratings filter</div>
+      <div style={{ marginTop: '50px' }}>Read Year filter</div>
     </StyledSidebar>
   );
 };
