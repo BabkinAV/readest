@@ -32,7 +32,7 @@ const Gallery: FC = () => {
     }
   }, [appliedFilters]);
 
-  const authors = Array.from(new Set(books.map((item) => item['Author l-f'])));
+  const authors = Array.from(new Set(data.map((item) => item['Author l-f'])));
 
   const handleSortTypeChange = (sortProperty: SortType) => {
     //if sort desc order should be set te negative
@@ -62,10 +62,14 @@ const Gallery: FC = () => {
     setAppliedFilters(modifiedAppliedFilters);
   };
   const handleAuthorClick = (addedElement: string) => {
-    setAppliedFilters((oldFiltersArray) => [
-      ...oldFiltersArray,
-      { category: 'author', value: addedElement },
-    ]);
+    // const newElement: AppliedFilter = {category: 'author', value: addedElement};
+    if (appliedFilters.findIndex(element => element.value === addedElement) === -1) {
+      setAppliedFilters((oldFiltersArray) => [
+        ...oldFiltersArray,
+        { category: 'author', value: addedElement },
+      ]);
+    }
+    
   };
 
   return (

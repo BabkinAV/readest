@@ -26,7 +26,7 @@ const FilterAuthor: FC<FilterAuthorProps> = ({ authors, onAuthorClick }) => {
         <div className="filterAuthor__selection">
           <ul className="filterAuthor__list">
             {authors.slice(0, 5).map((el) => (
-              <li key={authors.indexOf(el)}>
+              <li key={authors.indexOf(el)} onClick={()=> onAuthorClick(el)}>
                 <span>{el}</span>
               </li>
             ))}
