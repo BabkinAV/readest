@@ -11,5 +11,5 @@ export interface Book {
 
 export interface AppliedFilter {
   category: 'author' | 'rating' | 'year';
-  value: string;
+  value: string | number;
 }

@@ -1,4 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
+import dayjs from 'dayjs';
+import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
 import Sidebar from './Sidebar';
@@ -15,16 +17,19 @@ export type SortType =
 
 const Gallery: FC = () => {
   const [books, setBooks] = useState<Book[]>(data);
-  // const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([
-  //   { category: 'author', value: 'Sanderson, Brandon' },
-  //   { category: 'author', value: 'Herbert, Brian' },
-  // ]);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([]);
   useEffect(() => {
     if (appliedFilters.length > 0) {
       const filteredBooks = data.filter((book: Book) =>
-        //checking if appliedFilters array contains object with value equal to ['Author l-f] property
-        appliedFilters.some((filter) => filter.value === book['Author l-f'])
+        //checking if appliedFilters array contains object with value equal to ['Author l-f'] property
+        appliedFilters.some((distinctEl) => {
+          if (distinctEl.category === 'author') {
+            return distinctEl.value === book['Author l-f'];
+          } else {
+            return distinctEl.value === book['My Rating'];
+            //TODO: create condition for year
+          }
+        })
       );
       setBooks(filteredBooks);
     } else {
@@ -32,7 +37,16 @@ const Gallery: FC = () => {
     }
   }, [appliedFilters]);
 
+  //TODO: consolidate 3 data parses into a single function
+
   const authors = Array.from(new Set(data.map((item) => item['Author l-f'])));
+
+  dayjs.extend(CustomParseFormat);
+  const yearsRead = Array.from(
+    new Set(
+      data.map((item) => dayjs(item['Date Read'], 'YYYY/MM/DD').format('YYYY'))
+    )
+  );
 
   const handleSortTypeChange = (sortProperty: SortType) => {
     //if sort desc order should be set te negative
@@ -55,21 +69,24 @@ const Gallery: FC = () => {
     });
   };
 
-  const handleXmarkClick = (filterValue: string) => {
+  const handleXmarkClick = (filterValue: string | number) => {
     const modifiedAppliedFilters = appliedFilters.filter(
       (arrayItem) => arrayItem.value !== filterValue
     );
     setAppliedFilters(modifiedAppliedFilters);
   };
-  const handleAuthorClick = (addedElement: string) => {
+  const handleFilterClick = (addedElement: AppliedFilter) => {
     // const newElement: AppliedFilter = {category: 'author', value: addedElement};
-    if (appliedFilters.findIndex(element => element.value === addedElement) === -1) {
+    if (
+      appliedFilters.findIndex(
+        (element) => element.value === addedElement.value
+      ) === -1
+    ) {
       setAppliedFilters((oldFiltersArray) => [
         ...oldFiltersArray,
-        { category: 'author', value: addedElement },
+        { category: addedElement.category, value: addedElement.value },
       ]);
     }
-    
   };
 
   return (
@@ -81,9 +98,10 @@ const Gallery: FC = () => {
         <Sidebar
           handleSortTypeChange={handleSortTypeChange}
           authors={authors}
+          yearsRead={yearsRead}
           appliedFilters={appliedFilters}
           handleXmarkClick={handleXmarkClick}
-          handleAuthorClick={handleAuthorClick}
+          handleFilterClick={handleFilterClick}
         />
         <div className="gallery__container">
           {books.map((el) => {

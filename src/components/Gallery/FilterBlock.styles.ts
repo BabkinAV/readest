@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledFilterAuthor = styled.div`
+export const StyledFilterBlock = styled.div`
   font-family: 'Source Sans Pro', sans-serif;
-  .filterAuthor__header {
+  .filterBlock__header {
     color: red;
     padding: 13px 16px;
     background-color: grey;
@@ -15,8 +15,8 @@ export const StyledFilterAuthor = styled.div`
     letter-spacing: 1px;
   }
 
-    .filterAuthor__list,
-    .filterAuthor__trigger {
+    .filterBlock__list,
+    .filterBlock__trigger {
       padding-left: 30px;
       font-size: 15px;
       font-weight: 300;
@@ -24,7 +24,7 @@ export const StyledFilterAuthor = styled.div`
       color: #000;
       font-style: italic;
     }
-    .filterAuthor__trigger {
+    .filterBlock__trigger {
       font-weight: 600;
       cursor: pointer;
       &:hover {
@@ -32,7 +32,7 @@ export const StyledFilterAuthor = styled.div`
       }
 
     }
-    .filterAuthor__list {
+    .filterBlock__list {
       margin: 0;
       list-style: none;
       cursor: pointer;

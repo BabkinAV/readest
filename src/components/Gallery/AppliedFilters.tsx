@@ -4,7 +4,7 @@ import { AppliedFilter } from '../../data.model';
 
 type AppliedFiltersProps = {
   appliedFilters: AppliedFilter[];
-  handleXmarkClick: (itemname: string) => void
+  handleXmarkClick: (itemname: string | number) => void;
 };
 
 const AppliedFilters = ({ appliedFilters, handleXmarkClick }: AppliedFiltersProps) => {
@@ -15,7 +15,7 @@ const AppliedFilters = ({ appliedFilters, handleXmarkClick }: AppliedFiltersProp
         {appliedFilters.map((el) => (
           <div className="set-filter__item" key={el.value}>
             <span>{el.value}</span>
-            <FontAwesomeIcon icon={['fas', 'xmark']} onClick={() => handleXmarkClick(el.value)}/>
+            <FontAwesomeIcon icon={['fas', 'xmark']} onClick={() => handleXmarkClick(el.value )}/>
           </div>
         ))}
       </div>

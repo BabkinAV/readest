@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledSidebar } from './Sidebar.styles';
 
 import { SortType } from './Gallery';
-import FilterAuthor from './FilterAuthor';
+import FilterBlock from './FilterBlock';
 import AppliedFilters from './AppliedFilters';
 import { AppliedFilter } from '../../data.model';
 
@@ -12,16 +12,18 @@ type SidebarProps = {
   handleSortTypeChange: (sortType: SortType) => void;
   authors: string[];
   appliedFilters: AppliedFilter[];
-  handleXmarkClick: (p:string) => void;
-  handleAuthorClick: (p:string) => void;
+  handleXmarkClick: (p:string | number) => void;
+  handleFilterClick: (p:AppliedFilter) => void;
+  yearsRead: string[];
 };
 
 const Sidebar: FC<SidebarProps> = ({
   handleSortTypeChange,
   authors,
+  yearsRead,
   appliedFilters,
   handleXmarkClick,
-  handleAuthorClick
+  handleFilterClick
 }) => {
   return (
     <StyledSidebar className="sidebar">
@@ -51,9 +53,9 @@ const Sidebar: FC<SidebarProps> = ({
       </div>
 
       <h3>Choose filters:</h3>
-      <FilterAuthor authors={authors} onAuthorClick={handleAuthorClick}/>
-      <div style={{ marginTop: '50px' }}>Ratings filter</div>
-      <div style={{ marginTop: '50px' }}>Read Year filter</div>
+      <FilterBlock items={authors} type='author'  onFilterClick={handleFilterClick}/>
+      <div style={{ marginTop: '50px', marginBottom: '50px' }}>Ratings filter</div>
+      <FilterBlock items={yearsRead} type='year read'  onFilterClick={handleFilterClick}/>
     </StyledSidebar>
   );
 };
