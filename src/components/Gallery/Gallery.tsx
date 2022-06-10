@@ -53,6 +53,7 @@ const Gallery: FC = () => {
 
   const authors = Array.from(new Set(data.map((item) => item['Author l-f'])));
 
+  //enabling custom parse format for dayjs
   dayjs.extend(CustomParseFormat);
   const yearsRead = Array.from(
     new Set(
