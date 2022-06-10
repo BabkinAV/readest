@@ -5,7 +5,7 @@ import { AnimatedUl } from './AnimatedUl.styles';
 import { AppliedFilter } from '../../data.model';
 
 type FilterBlockProps = {
-  items: string[];
+  items: (string | number) [] ;
   onFilterClick: (p: AppliedFilter) => void;
   category: 'author' | 'rating' | 'year';
 };

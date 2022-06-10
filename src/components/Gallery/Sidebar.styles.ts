@@ -42,4 +42,7 @@ export const StyledSidebar = styled.div`
       }
     }
   }
+  .filterBlock {
+    padding-bottom: 30px;
+  }
 `;

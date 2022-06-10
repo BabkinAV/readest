@@ -27,9 +27,11 @@ const Gallery: FC = () => {
           const isFilterListNotIncludes = {
             author: !appliedFilters.some((elem) => elem.category === 'author'),
             year: !appliedFilters.some((elem) => elem.category === 'year'),
+            rating: !appliedFilters.some((elem) => elem.category === 'rating'),
           };
 
           //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
+          //TODO: review edge cases
           return (
             (isFilterListNotIncludes.author ||
               appliedFilters.some((distinctEl) => {
@@ -38,7 +40,11 @@ const Gallery: FC = () => {
             (isFilterListNotIncludes.year ||
               appliedFilters.some((distinctEl) => {
                 return distinctEl.value === book['Date Read'].slice(0, 4);
-              }))
+              })) &&
+              (isFilterListNotIncludes.rating ||
+                appliedFilters.some((distinctEl) => {
+                  return distinctEl.value === book['My Rating'];
+                }))
           );
         }
 
@@ -51,18 +57,21 @@ const Gallery: FC = () => {
 
   //TODO: consolidate 3 data parses into a single function
 
-  const authors = Array.from(new Set(data.map((item) => item['Author l-f'])));
+  const authors: string[] = Array.from(new Set(data.map((item) => item['Author l-f'])));
+
+  const ratings: number[] = Array.from(new Set(data.map((item) => item['My Rating'])));
 
   //enabling custom parse format for dayjs
   dayjs.extend(CustomParseFormat);
-  const yearsRead = Array.from(
+  const yearsRead: string[] = Array.from(
     new Set(
       data.map((item) => dayjs(item['Date Read'], 'YYYY/MM/DD').format('YYYY'))
     )
   );
 
+
   const handleSortTypeChange = (sortProperty: SortType) => {
-    //if sort desc order should be set te negative
+    //if sort desc order should be set to negative
     let order = 1;
     if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
       order = -1;
@@ -112,6 +121,7 @@ const Gallery: FC = () => {
           handleSortTypeChange={handleSortTypeChange}
           authors={authors}
           yearsRead={yearsRead}
+          ratings={ratings}
           appliedFilters={appliedFilters}
           handleXmarkClick={handleXmarkClick}
           handleFilterClick={handleFilterClick}

@@ -11,6 +11,7 @@ import { AppliedFilter } from '../../data.model';
 type SidebarProps = {
   handleSortTypeChange: (sortType: SortType) => void;
   authors: string[];
+  ratings: number[];
   appliedFilters: AppliedFilter[];
   handleXmarkClick: (p: string | number) => void;
   handleFilterClick: (p: AppliedFilter) => void;
@@ -20,6 +21,7 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({
   handleSortTypeChange,
   authors,
+  ratings,
   yearsRead,
   appliedFilters,
   handleXmarkClick,
@@ -60,9 +62,11 @@ const Sidebar: FC<SidebarProps> = ({
         category="author"
         onFilterClick={handleFilterClick}
       />
-      <div style={{ marginTop: '50px', marginBottom: '50px' }}>
-        Ratings filter
-      </div>
+      <FilterBlock
+        items={ratings}
+        category="rating"
+        onFilterClick={handleFilterClick}
+      />
       <FilterBlock
         items={yearsRead}
         category="year"
