@@ -12,8 +12,8 @@ type SidebarProps = {
   handleSortTypeChange: (sortType: SortType) => void;
   authors: string[];
   appliedFilters: AppliedFilter[];
-  handleXmarkClick: (p:string | number) => void;
-  handleFilterClick: (p:AppliedFilter) => void;
+  handleXmarkClick: (p: string | number) => void;
+  handleFilterClick: (p: AppliedFilter) => void;
   yearsRead: string[];
 };
 
@@ -23,14 +23,16 @@ const Sidebar: FC<SidebarProps> = ({
   yearsRead,
   appliedFilters,
   handleXmarkClick,
-  handleFilterClick
+  handleFilterClick,
 }) => {
   return (
     <StyledSidebar className="sidebar">
-      {(appliedFilters.length > 0) && <AppliedFilters
-        appliedFilters={appliedFilters}
-        handleXmarkClick={handleXmarkClick}
-      />}
+      {appliedFilters.length > 0 && (
+        <AppliedFilters
+          appliedFilters={appliedFilters}
+          handleXmarkClick={handleXmarkClick}
+        />
+      )}
       <div className="sort">
         <label className="sort__label" htmlFor="sort-select">
           Sort by:
@@ -53,9 +55,19 @@ const Sidebar: FC<SidebarProps> = ({
       </div>
 
       <h3>Choose filters:</h3>
-      <FilterBlock items={authors} type='author'  onFilterClick={handleFilterClick}/>
-      <div style={{ marginTop: '50px', marginBottom: '50px' }}>Ratings filter</div>
-      <FilterBlock items={yearsRead} type='year read'  onFilterClick={handleFilterClick}/>
+      <FilterBlock
+        items={authors}
+        category="author"
+        onFilterClick={handleFilterClick}
+      />
+      <div style={{ marginTop: '50px', marginBottom: '50px' }}>
+        Ratings filter
+      </div>
+      <FilterBlock
+        items={yearsRead}
+        category="year"
+        onFilterClick={handleFilterClick}
+      />
     </StyledSidebar>
   );
 };

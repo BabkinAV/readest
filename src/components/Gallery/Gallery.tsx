@@ -20,16 +20,28 @@ const Gallery: FC = () => {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([]);
   useEffect(() => {
     if (appliedFilters.length > 0) {
-      const filteredBooks = data.filter((book: Book) =>
-        //checking if appliedFilters array contains object with value equal to ['Author l-f'] property
-        appliedFilters.some((distinctEl) => {
-          if (distinctEl.category === 'author') {
-            return distinctEl.value === book['Author l-f'];
-          } else {
-            return distinctEl.value === book['My Rating'];
-            //TODO: create condition for year
-          }
-        })
+      const filteredBooks = data.filter(
+        (book: Book) => {
+          //checking if specific filter categories are present on filter array
+
+          const isFilterListNotIncludes = {
+            author: !appliedFilters.some((elem) => elem.category === 'author'),
+            year: !appliedFilters.some((elem) => elem.category === 'year'),
+          };
+
+          //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
+          return (
+            (isFilterListNotIncludes.author ||
+              appliedFilters.some((distinctEl) => {
+                return distinctEl.value === book['Author l-f'];
+              })) &&
+            (isFilterListNotIncludes.year ||
+              appliedFilters.some((distinctEl) => {
+                return distinctEl.value === book['Date Read'].slice(0, 4);
+              }))
+          );
+        }
+
       );
       setBooks(filteredBooks);
     } else {

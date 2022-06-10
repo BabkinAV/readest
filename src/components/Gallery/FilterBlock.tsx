@@ -7,25 +7,27 @@ import { AppliedFilter } from '../../data.model';
 type FilterBlockProps = {
   items: string[];
   onFilterClick: (p: AppliedFilter) => void;
-  type: 'author' | 'rating' | 'year read';
+  category: 'author' | 'rating' | 'year';
 };
 
-const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, type }) => {
+const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) => {
   const [additionalBlockSegmentsIsShown, setAdditionalBlockSegmentsIsShown] =
     useState<boolean>(false);
   const onMoreClickHandler = () => {
     setAdditionalBlockSegmentsIsShown((prevState) => !prevState);
   };
+  const title =
+    category === 'year' ? 'Year read' : category === 'rating' ? 'My rating' : 'author';
   return (
     <StyledFilterBlock className="filterBlock">
-      <div className="filterBlock__header">{type.toUpperCase()}</div>
+      <div className="filterBlock__header">{title.toUpperCase()}</div>
       <div className="filterBlock__body">
         <div className="filterBlock__selection">
           <ul className="filterBlock__list">
             {items.slice(0, 5).map((el) => (
               <li
                 key={items.indexOf(el)}
-                onClick={() => onFilterClick({ category: 'author', value: el })}
+                onClick={() => onFilterClick({ category, value: el })}
               >
                 <span>{el}</span>
               </li>
