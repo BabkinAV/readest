@@ -1,6 +1,7 @@
 import { StyledAppliedFilters } from './AppliedFilters.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppliedFilter } from '../../data.model';
+import StarRating from './StarRating';
 
 type AppliedFiltersProps = {
   appliedFilters: AppliedFilter[];
@@ -14,8 +15,9 @@ const AppliedFilters = ({ appliedFilters, handleXmarkClick }: AppliedFiltersProp
       <div className="set-filter">
         {appliedFilters.map((el) => (
           <div className="set-filter__item" key={el.value}>
-            <span>{el.value}</span>
-            <FontAwesomeIcon icon={['fas', 'xmark']} onClick={() => handleXmarkClick(el.value )}/>
+            {(el.category === 'rating') ? (<StarRating rating={el.value as number}/>) : (<span>{el.value}</span>)}
+            
+            <FontAwesomeIcon className="set-filter__xmark" icon={['fas', 'xmark']} onClick={() => handleXmarkClick(el.value )}/>
           </div>
         ))}
       </div>

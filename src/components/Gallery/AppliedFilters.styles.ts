@@ -23,7 +23,9 @@ export const StyledAppliedFilters = styled.div`
       line-height: 18px;
       color: #666;
 
-      svg {
+    }
+
+    .set-filter__xmark {
         position: absolute;
         top: 50%;
         right: 20px;
@@ -33,6 +35,5 @@ export const StyledAppliedFilters = styled.div`
           color: #000;
         }
       }
-    }
   }
 `;
