@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect } from 'react';
-import dayjs from 'dayjs';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
 import Sidebar from './Sidebar';
