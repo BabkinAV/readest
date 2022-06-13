@@ -1,10 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
 import Sidebar from './Sidebar';
 import data from '../../data';
+import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 import { Book } from '../../data.model';
 import { AppliedFilter } from '../../data.model';
 
@@ -20,55 +20,44 @@ const Gallery: FC = () => {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([]);
   useEffect(() => {
     if (appliedFilters.length > 0) {
-      const filteredBooks = data.filter(
-        (book: Book) => {
-          //checking if specific filter categories are present on filter array
+      const filteredBooks = data.filter((book: Book) => {
+        //checking if specific filter categories are present on filter array
 
-          const isFilterListNotIncludes = {
-            author: !appliedFilters.some((elem) => elem.category === 'author'),
-            year: !appliedFilters.some((elem) => elem.category === 'year'),
-            rating: !appliedFilters.some((elem) => elem.category === 'rating'),
-          };
+        const isFilterListNotIncludes = {
+          author: !appliedFilters.some((elem) => elem.category === 'author'),
+          year: !appliedFilters.some((elem) => elem.category === 'year'),
+          rating: !appliedFilters.some((elem) => elem.category === 'rating'),
+        };
 
-          //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
-          //TODO: review edge cases
-          return (
-            (isFilterListNotIncludes.author ||
-              appliedFilters.some((distinctEl) => {
-                return distinctEl.value === book['Author l-f'];
-              })) &&
-            (isFilterListNotIncludes.year ||
-              appliedFilters.some((distinctEl) => {
-                return distinctEl.value === book['Date Read'].slice(0, 4);
-              })) &&
-              (isFilterListNotIncludes.rating ||
-                appliedFilters.some((distinctEl) => {
-                  return distinctEl.value === book['My Rating'];
-                }))
-          );
-        }
-
-      );
+        //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
+        //TODO: review edge cases
+        return (
+          (isFilterListNotIncludes.author ||
+            appliedFilters.some((distinctEl) => {
+              return distinctEl.value === book['Author l-f'];
+            })) &&
+          (isFilterListNotIncludes.year ||
+            appliedFilters.some((distinctEl) => {
+              return distinctEl.value === book['Date Read'].slice(0, 4);
+            })) &&
+          (isFilterListNotIncludes.rating ||
+            appliedFilters.some((distinctEl) => {
+              return distinctEl.value === book['My Rating'];
+            }))
+        );
+      });
       setBooks(filteredBooks);
     } else {
       setBooks(data);
     }
   }, [appliedFilters]);
 
-  //TODO: consolidate 3 data parses into a single function
 
-  const authors: string[] = Array.from(new Set(data.map((item) => item['Author l-f'])));
+  const authors: string[] = createArrayOfUniqueValues<string>(data, 'Author l-f', true);
 
-  const ratings: number[] = Array.from(new Set(data.map((item) => item['My Rating'])));
+  const ratings: number[] = createArrayOfUniqueValues<number>(data, 'My Rating', false);
 
-  //enabling custom parse format for dayjs
-  dayjs.extend(CustomParseFormat);
-  const yearsRead: string[] = Array.from(
-    new Set(
-      data.map((item) => dayjs(item['Date Read'], 'YYYY/MM/DD').format('YYYY'))
-    )
-  );
-
+  const yearsRead: string[] = createArrayOfUniqueValues<string>(data, 'Date Read', false);
 
   const handleSortTypeChange = (sortProperty: SortType) => {
     //if sort desc order should be set to negative
