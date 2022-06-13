@@ -3,6 +3,7 @@ import { Transition } from 'react-transition-group';
 import { StyledFilterBlock } from './FilterBlock.styles';
 import { AnimatedUl } from './AnimatedUl.styles';
 import { AppliedFilter } from '../../data.model';
+import StarRating from './StarRating';
 
 type FilterBlockProps = {
   items: (string | number) [] ;
@@ -29,7 +30,7 @@ const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) =
                 key={items.indexOf(el)}
                 onClick={() => onFilterClick({ category, value: el })}
               >
-                <span>{el}</span>
+                {(category === 'rating') ? (<StarRating rating={el as number}/>) : (<span>{el}</span>)}
               </li>
             ))}
           </ul>
