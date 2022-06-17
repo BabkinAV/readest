@@ -12,7 +12,7 @@ function App() {
       <main>
         <h1 className="logo">Readest</h1>
         <TopNavigation />
-        <MainPage />
+         <MainPage />
       </main>
     </div>
   );
