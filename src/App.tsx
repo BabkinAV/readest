@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import MainPage from './components/layout/MainPage';
-import TopNavigation from './components/layout/TopNavigation';
+import TopNavigation from './components/layout/TopNavigation/TopNavigation';
 
 
 
