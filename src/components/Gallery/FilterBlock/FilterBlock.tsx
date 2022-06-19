@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { StyledFilterBlock } from './FilterBlock.styles';
-import { AnimatedUl } from './AnimatedUl.styles';
-import { AppliedFilter } from '../../data.model';
-import StarRating from './StarRating';
+import { AnimatedUl } from '../AnimatedUl.styles';
+import { AppliedFilter } from '../../../data.model';
+import StarRating from '../StarRating';
 
 type FilterBlockProps = {
   items: (string | number) [] ;
@@ -71,7 +71,7 @@ const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) =
         </div>
         {items.length > 5 && (
           <div className="filterBlock__trigger">
-            <span onClick={() => onMoreClickHandler()}>
+            <span onClick={onMoreClickHandler}>
               {additionalBlockSegmentsIsShown ? 'less' : 'more'}
             </span>
           </div>

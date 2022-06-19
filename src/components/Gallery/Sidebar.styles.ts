@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledSidebar = styled.div`
-  h3, label {
+  h3,
+  label {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     font-style: italic;
@@ -15,13 +16,13 @@ export const StyledSidebar = styled.div`
     &__select {
       width: 100%;
 
-
       svg {
         position: absolute;
         right: 10px;
         top: 50%;
-        z-index: -10;
+        z-index: 10;
         transform: translateY(-50%);
+        pointer-events: none;
       }
 
       position: relative;
@@ -34,13 +35,13 @@ export const StyledSidebar = styled.div`
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-color: transparent;
+        background-color: white;
         width: 100%;
 
         option {
           white-space: pre;
-          
         }
+
 
 
         &:focus {

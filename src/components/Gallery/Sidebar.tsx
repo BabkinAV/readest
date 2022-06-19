@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledSidebar } from './Sidebar.styles';
 
 import { SortType } from './Gallery';
-import FilterBlock from './FilterBlock';
+import FilterBlock from './FilterBlock/FilterBlock';
 import AppliedFilters from './AppliedFilters';
 import { AppliedFilter } from '../../data.model';
 
