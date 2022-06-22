@@ -29,7 +29,7 @@ const Gallery: FC = () => {
         };
 
         //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
-        //TODO: review edge cases
+        //TODO: review edge cases (like author name is equal to some number etc.)
         return (
           (isFilterListNotIncludes.author ||
             appliedFilters.some((distinctEl) => {
