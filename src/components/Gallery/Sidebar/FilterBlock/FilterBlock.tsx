@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { StyledFilterBlock } from './FilterBlock.styles';
-import { AnimatedUl } from '../AnimatedUl.styles';
-import { AppliedFilter } from '../../../data.model';
-import StarRating from '../StarRating';
+import { AnimatedUl } from './AnimatedUl.styles';
+import { AppliedFilter } from '../../../../data.model';
+import StarRating from '../StarRating/StarRating';
 
 type FilterBlockProps = {
   items: (string | number) [] ;

@@ -1,7 +1,7 @@
 import { StyledAppliedFilters } from './AppliedFilters.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppliedFilter } from '../../data.model';
-import StarRating from './StarRating';
+import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 
 type AppliedFiltersProps = {
   appliedFilters: AppliedFilter[];

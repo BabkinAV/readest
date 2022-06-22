@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyledGalleryItem } from './GalleryItem.styles';
-import StarRating from './StarRating';
+import StarRating from './Sidebar/StarRating/StarRating';
 import emptyCover from '../../assets/images/emptyCover_sm.png';
 import  dayjs from 'dayjs';
 

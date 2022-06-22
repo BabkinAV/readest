@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from './GalleryItem';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar/Sidebar';
 import data from '../../data';
 import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 import { Book } from '../../data.model';
