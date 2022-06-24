@@ -43,6 +43,11 @@ describe('sorting and filters functionality for gallery', () => {
 
     expect(galleryItems).toHaveLength(1);
 
+    //check if header appeared:
+
+    let appliedFilterHeader = screen.getByRole('heading', {name: 'Applied Filters', level: 3});
+    expect(appliedFilterHeader).toBeInTheDocument();
+
     expect(galleryItems[0].alt).toContain('The Wisdom of Crowds');
 
      //check if Applied filter item has been displayed
@@ -95,6 +100,8 @@ describe('sorting and filters functionality for gallery', () => {
     setFilters = screen.queryAllByTestId('set-filter__item');
 
     expect(setFilters).toHaveLength(0);
+
+    expect(appliedFilterHeader).not.toBeInTheDocument();
 
     //TODO: check if Applied Filter is appearing on filter click
     //TODO: the same tests for other filters
