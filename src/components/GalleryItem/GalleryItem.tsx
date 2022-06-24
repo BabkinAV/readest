@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyledGalleryItem } from './GalleryItem.styles';
-import StarRating from './Sidebar/StarRating/StarRating';
+import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 import emptyCover from '../../assets/images/emptyCover_sm.png';
 import  dayjs from 'dayjs';
 
@@ -30,7 +30,7 @@ const GalleryItem: FC<GalleryItemProps> = ({
               currentTarget.onerror = null; // prevents looping
               currentTarget.src=emptyCover;
             }}
-            alt="book cover"
+            alt={`${title} cover`}
           />
           {/* <img
             src={emptyCover}
