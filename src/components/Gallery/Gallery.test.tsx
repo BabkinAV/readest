@@ -12,7 +12,7 @@ describe('sorting and filters functionality for gallery', () => {
     userEvent.selectOptions(sortSelect, titleOption);
     expect(titleOption.selected).toBe(true);
     let galleryItems = screen.getAllByAltText(
-      /cover$/g
+      /cover$/
     ) as HTMLImageElement[];
 
     
@@ -36,7 +36,7 @@ describe('sorting and filters functionality for gallery', () => {
     userEvent.click(authorFilterItem);
 
     let galleryItems = screen.getAllByAltText(
-      /cover$/g
+      /cover$/
     ) as HTMLImageElement[];
 
     //check if gallery items are filtered
@@ -60,7 +60,7 @@ describe('sorting and filters functionality for gallery', () => {
     userEvent.click(authorFilterItem);
 
     galleryItems = screen.getAllByAltText(
-      /cover$/g
+      /cover$/
     ) as HTMLImageElement[];
 
     expect(galleryItems).toHaveLength(2);
@@ -82,7 +82,7 @@ describe('sorting and filters functionality for gallery', () => {
     expect(setFilters).toHaveLength(1);
 
     galleryItems = screen.getAllByAltText(
-      /cover$/g
+      /cover$/
     ) as HTMLImageElement[];
 
     //check if gallery items are filtered
@@ -103,10 +103,55 @@ describe('sorting and filters functionality for gallery', () => {
 
     expect(appliedFilterHeader).not.toBeInTheDocument();
 
-    //TODO: check if Applied Filter is appearing on filter click
-    //TODO: the same tests for other filters
-
 
   })
+
+  test('rating filtering functionality', () => {
+    render(<Gallery />);
+
+    //click one item filter item
+    let ratingItem = screen.getAllByTestId('star-rating');
+
+    userEvent.click(ratingItem[1]);
+
+    //check if gallery items are filtered
+
+    let galleryItems = screen.getAllByAltText(
+      /cover$/
+    ) as HTMLImageElement[];
+
+    expect(galleryItems).toHaveLength(7);
+
+    //check if applied header  and one applied item both appear 
+
+    let appliedFilterHeader = screen.getByRole('heading', {name: 'Applied Filters', level: 3});
+    expect(appliedFilterHeader).toBeInTheDocument();
+
+    let setFilters = screen.getAllByTestId('set-filter__item');
+
+    expect(setFilters).toHaveLength(1);
+
+    //ensure applied filter type
+
+    const appliedFilterStarRating = within(setFilters[0]).getByTestId('star-rating');
+    expect(appliedFilterStarRating).toBeInTheDocument();
+
+
+    //click cross mark on applied filter
+
+    const iconsInsideFilter = within(setFilters[0]).getAllByRole('img', {hidden: true});
+
+
+    userEvent.click(iconsInsideFilter[5]);
+
+    setFilters = screen.queryAllByTestId('set-filter__item');
+
+    expect(setFilters).toHaveLength(0);
+
+    expect(appliedFilterHeader).not.toBeInTheDocument();
+  
+  })
+
+  
 
 });
