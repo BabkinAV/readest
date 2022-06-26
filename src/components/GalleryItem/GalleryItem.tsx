@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
+import  dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 import { StyledGalleryItem } from './GalleryItem.styles';
 import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 import emptyCover from '../../assets/images/emptyCover_sm.png';
-import  dayjs from 'dayjs';
 
 type GalleryItemProps = {
   key: number;
+  id: number;
   title: string;
   author: string;
   rating: number;
@@ -14,6 +16,7 @@ type GalleryItemProps = {
 };
 
 const GalleryItem: FC<GalleryItemProps> = ({
+  id,
   title,
   author,
   rating,
@@ -24,18 +27,17 @@ const GalleryItem: FC<GalleryItemProps> = ({
     <StyledGalleryItem className="gallery-item">
       <div className="gallery-item__wrapper">
         <div className="gallery-item__image">
-          <img
-            src={`https://covers.openlibrary.org/b/isbn/${isbn13}-M.jpg?default=false`}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null; // prevents looping
-              currentTarget.src=emptyCover;
-            }}
-            alt={`${title} cover`}
-          />
-          {/* <img
-            src={emptyCover}
-            alt="book cover"
-          /> */}
+          
+          <Link to={`/book/${id}`}>
+            <img
+              src={`https://covers.openlibrary.org/b/isbn/${isbn13}-M.jpg?default=false`}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src=emptyCover;
+              }}
+              alt={`${title} cover`}
+            />
+          </Link>
           
         </div>
         <div className="gallery-item__title">

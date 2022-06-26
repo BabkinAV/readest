@@ -119,6 +119,7 @@ const Gallery: FC = () => {
             return (
               <GalleryItem
                 key={el['Book Id']}
+                id={el['Book Id']}
                 title={el.Title}
                 author={el.Author}
                 rating={el['My Rating']}
