@@ -1,8 +1,6 @@
 import {
-  fireEvent,
   render,
   screen,
-  act,
   waitFor,
 } from '../../../../test-utils/testing-utils';
 import userEvent from '@testing-library/user-event';
@@ -24,14 +22,9 @@ test('author list expand functionality', async () => {
   expect(authorListsArray.length).toBe(1);
 
   const expandToggler = screen.getByText(/more/);
-  fireEvent.click(expandToggler);
-  // // eslint-disable-next-line testing-library/no-unnecessary-act
-  // await act(async () => {});
+  userEvent.click(expandToggler);
   // //more button turns less and back
   expect(expandToggler).toHaveTextContent('less');
-  // await act(async () => {
-  //   await new Promise((r) => setTimeout(r, 3000))
-  // })
   await waitFor(() => {
     authorListsArray = screen.getAllByRole('list');
     return expect(authorListsArray.length).toBe(2);
