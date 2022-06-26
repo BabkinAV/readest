@@ -22,6 +22,18 @@ describe('sorting and filters functionality for gallery', () => {
     }) as HTMLOptionElement;
     userEvent.selectOptions(sortSelect, AuthorOption);
     expect(AuthorOption.selected).toBe(true);
+    galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
+    expect(galleryItems[0].alt).toContain('The Wisdom of Crowds');
+
+    const ReadDateOption = screen.getByRole('option', {
+      name: 'Read Date',
+    }) as HTMLOptionElement;
+    userEvent.selectOptions(sortSelect, ReadDateOption);
+    expect(ReadDateOption.selected).toBe(true);
+    galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
+    expect(galleryItems[0].alt).toContain('Words of Radiance');
+
+    
   });
 
   test('author filtering functionality', () => {
@@ -190,6 +202,42 @@ describe('sorting and filters functionality for gallery', () => {
     expect(appliedFilterHeader).not.toBeInTheDocument();
   });
 
-  //TODO: create tests for year filtering
-  //TODO: check tests coverage
+  test('filters combination test', () => {
+    //check filtering of  4* books read in 2020
+
+    render(<Gallery />);
+
+    //click one item filter item
+    let yearFilterItem = screen.getByText(/^2020/);
+    userEvent.click(yearFilterItem);
+
+    
+
+    //click one item filter item
+    let ratingItem = screen.getAllByTestId('star-rating');
+
+    userEvent.click(ratingItem[1]);
+
+    //check if gallery items are filtered
+
+    let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
+
+    expect(galleryItems).toHaveLength(5);
+
+  })
+
+  test('checking double filter click', () => {
+    render(<Gallery />);
+
+    //click one item filter item
+    let yearFilterItem = screen.getByText(/^2021/);
+    userEvent.click(yearFilterItem);
+    userEvent.click(yearFilterItem);
+
+    let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
+
+    //check if gallery items are filtered
+
+    expect(galleryItems).toHaveLength(3);
+  })
 })
