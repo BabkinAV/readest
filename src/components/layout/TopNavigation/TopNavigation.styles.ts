@@ -10,7 +10,10 @@ export const Wrapper = styled.nav`
     padding-top: 12px;
     padding-bottom: 12px;
     .navigation__item {
+      
       display: inline-block;
+    }
+    .navigation__item a{
       margin-right: 15px;
       color: ${(props) => props.theme.secondary};
       text-transform: uppercase;
@@ -19,9 +22,13 @@ export const Wrapper = styled.nav`
       font-family: ${(props) => props.theme.fonts.secondary};
       cursor: pointer;
 
-      &:hover, &--active {
+      &:hover, &.active {
         color: #fff;
         background-color: ${(props) => props.theme.secondary};
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
       }
       
     }

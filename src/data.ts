@@ -432,3 +432,8 @@ const data = [
 ];
 
 export default data;
+
+export function getBookById(id:number) {
+  return data.find((book) => book['Book Id'] === id);
+}
+
