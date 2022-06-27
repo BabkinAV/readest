@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './fontawesome';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 import theme from './components/AppTheme';
 
 import App from './App';
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   // </React.StrictMode>
 );

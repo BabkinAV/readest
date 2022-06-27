@@ -8,7 +8,6 @@ import TopNavigation from './components/layout/TopNavigation/TopNavigation';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
         <main>
           <h1 className="logo">Readest</h1>
           <TopNavigation />
@@ -18,7 +17,6 @@ function App() {
 
           </Routes>
         </main>
-      </BrowserRouter>
     </div>
   );
 }
