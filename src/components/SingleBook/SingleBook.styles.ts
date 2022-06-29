@@ -24,7 +24,7 @@ export const StyledSingleBook = styled.div`
       font-family: 'Source Sans Pro', Arial, sans-serif;
       margin-bottom: 30px;
       &--gold {
-        color: #9e866b;
+        color: ${(props) => props.theme.color.gold};
         font-size: 18px;
       }
       &--snippet {

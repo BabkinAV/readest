@@ -9,6 +9,9 @@ export const Wrapper = styled.div`
     }
     &__title {
       text-align: center;
+      font-family: 'Source Sans Pro', sans-serif;
+
+
     }
 
     &__wrapper {
