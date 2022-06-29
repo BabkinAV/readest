@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
-export  const StyledStarRating = styled.div`
+interface Props {
+  large?: boolean;
+}
+
+export const StyledStarRating = styled.div<Props>`
+  font-size: ${(props) => (props.large ? '24px' : '16px')};
+
   .rating {
     &__star {
-      color: #FF9933;
+      color: #ff9933;
     }
   }
 `;
