@@ -33,10 +33,11 @@ export const StyledSingleBook = styled.div`
         font-weight: 300;
       }
     }
-    &__rating {
+    &__rating, &__date {
       margin-bottom: 30px;
     }
-    &__date {
+    &__date,
+    &__pages {
       font-family: 'Nunito Sans', sans-serif;
     }
   }
