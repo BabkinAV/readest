@@ -12,5 +12,62 @@ export const StyledAddBook = styled.div`
         width: 100%;
       }
     }
+
+    .addBook-form {
+      &__header {
+        text-align: center;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      &__section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      &__group {
+        label {
+          font-family: 'Source Sans Pro', sans-serif;
+          font-size: 15px;
+          font-weight: 300;
+          display: block;
+          user-select: none;
+          padding-bottom: 10px;
+        }
+        input {
+          width: 90%;
+          height: 12px;
+          padding: 10px 12px;
+          font-size: 15px;
+          line-height: 22px;
+          font-family: 'Source Sans Pro', sans-serif;
+          font-weight: 300;
+          border: 1px solid #d1d1d1;
+          text-transform: none;
+          box-shadow: none;
+          border-radius: 0;
+          appearance: none !important;
+          vertical-align: middle;
+          outline: none;
+          &:active, &:focus {
+            border: 1px solid #b4b4b4;
+          } 
+        }
+        &--isbn {
+          input {
+            margin-bottom: 20px;
+          }
+        }
+      }
+      &__header {
+        grid-column: span 2;
+        margin: 0;
+      }
+      &__button {
+        &--save {
+          margin-right: 30px;
+        }
+      }
+    }
   }
 `;

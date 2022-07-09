@@ -11,16 +11,18 @@ const AddBook = () => {
           <img src={emptyCover} alt="empty cover" />
         </div>
         <div className="addBook__form addBook-form">
-          <h2 className="addBook-form__header--main">Add Book information</h2>
-          <div className="addBook-form__group addBook-form__section--title">
+          <h2 className="addBook-form__header addBook-form__header--main">
+            Add New Book
+          </h2>
+          <div className="addBook-form__section addBook-form__section--title">
             <div className="addBook-form__group">
               <label htmlFor="title">Book Title</label>
               <input id="title" name="title" type="text" />
             </div>
           </div>
 
-          <div className="addBook-form__section--author">
-            <h3 className="addBook-form__header--author">
+          <div className="addBook-form__section addBook-form__section--author">
+            <h3 className="addBook-form__header addBook-form__header--author">
               Add Author information
             </h3>
             <div className="addBook-form__group">
@@ -32,8 +34,8 @@ const AddBook = () => {
               <input id="lastName" name="lastName" type="text" />
             </div>
           </div>
-          <div className="addBook-form__section--review">
-            <h3 className="addBook-form__header--review">
+          <div className="addBook-form__section addBook-form__section--review">
+            <h3 className="addBook-form__header addBook-form__header--review">
               Add Review information
             </h3>
             <div className="addBook-form__group">
@@ -42,39 +44,36 @@ const AddBook = () => {
                 type="date"
                 id="date-read"
                 name="date-read"
-                value="2018-07-22"
                 min="2018-01-01"
                 max="2018-12-31"
               />
             </div>
-            <div className="addBok-form__group">
-              <StarRating rating={4} />
+            <div className="addBook-form__group">
+              <label htmlFor="rating">My rating</label>
+              <input type="number" id="rating" name="rating" min="1" max="5" />
             </div>
           </div>
-          <div className="addBook-form__section--extra">
-            <h3 className="addBook-form__header--extra">
+          <div className="addBook-form__section addBook-form__section--extra">
+            <h3 className="addBook-form__header addBook-form__header--extra">
               Additional information
             </h3>
-            <div className="addBook-form__group">
+            <div className="addBook-form__group  addBook-form__group--pages">
               <label htmlFor="pages">Number of pages:</label>
-              <input
-                type="number"
-                id="pages"
-                name="pages"
-                min="1"
-                max="100000"
-              />
+              <input id="pages" name="pages" type="text" />
             </div>
-            <div className="addBook-form__group">
+            <div className="addBook-form__group addBook-form__group--isbn">
               <label htmlFor="isbn">ISBN code (for book cover)</label>
               <input id="isbn" name="isbn" type="text" />
+              <button className="addBook-form__button">Get book cover</button>
             </div>
-            <button className="addBook-form__button">Get book cover</button>
           </div>
-          <div className="addBook-form__section--buttons">
-          <button className="addBook-form__button">Save</button>
-          <button className="addBook-form__button">Clear</button>
-          </div>
+
+          <button className="addBook-form__button addBook-form__button--save">
+            Save
+          </button>
+          <button className="addBook-form__button addBook-form__button--clear">
+            Clear
+          </button>
           <form onSubmit={() => {}}></form>
         </div>
       </div>
