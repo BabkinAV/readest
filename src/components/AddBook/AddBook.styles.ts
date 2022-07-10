@@ -15,13 +15,30 @@ export const StyledAddBook = styled.div`
 
     .addBook-form {
       &__header {
-        text-align: center;
+        text-align: left;
         font-family: 'Source Sans Pro', sans-serif;
+
+        grid-column: span 2;
+
+        h3 {
+          display: inline-block;
+          border-bottom: 1px solid #c8c8c8;
+          font-weight: 300;
+          font-style: italic;
+          text-align: left;
+          margin-top: 0;
+          margin-left: 0;
+          margin-right: 0;
+          padding-bottom: 5px;
+          margin-bottom: 10px;
+        }
+        &--main {
+          text-align: center;
+        }
       }
       &__section {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-gap: 30px;
         margin-bottom: 30px;
       }
 
@@ -49,9 +66,10 @@ export const StyledAddBook = styled.div`
           appearance: none !important;
           vertical-align: middle;
           outline: none;
-          &:active, &:focus {
+          &:active,
+          &:focus {
             border: 1px solid #b4b4b4;
-          } 
+          }
         }
         &--isbn {
           input {
@@ -60,8 +78,6 @@ export const StyledAddBook = styled.div`
         }
       }
       &__header {
-        grid-column: span 2;
-        margin: 0;
       }
       &__button {
         &--save {
