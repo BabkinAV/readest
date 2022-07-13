@@ -16,7 +16,7 @@ export const StyledAddBook = styled.div`
     .addBook-form {
       &__header {
         text-align: left;
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: ${(props) => props.theme.fonts.primary};
 
         grid-column: span 2;
 
@@ -44,7 +44,7 @@ export const StyledAddBook = styled.div`
 
       &__group {
         label {
-          font-family: 'Source Sans Pro', sans-serif;
+          font-family: ${(props) => props.theme.fonts.primary};
           font-size: 15px;
           font-weight: 300;
           display: block;
@@ -57,7 +57,7 @@ export const StyledAddBook = styled.div`
           padding: 10px 12px;
           font-size: 15px;
           line-height: 22px;
-          font-family: 'Source Sans Pro', sans-serif;
+          font-family: ${(props) => props.theme.fonts.primary};
           font-weight: 300;
           border: 1px solid #d1d1d1;
           text-transform: none;

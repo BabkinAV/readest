@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledAppliedFilters = styled.div`
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: ${(props) => props.theme.fonts.primary};
   h3 {
     font-style: italic;
     font-size: 16px;

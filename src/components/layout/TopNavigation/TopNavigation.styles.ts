@@ -15,7 +15,7 @@ export const Wrapper = styled.nav`
     }
     .navigation__item a{
       margin-right: 15px;
-      color: ${(props) => props.theme.secondary};
+      color: ${(props) => props.theme.color.green};
       text-transform: uppercase;
       padding: 4px 8px;
       transition: background 0.3s, color 0.3s;
@@ -24,7 +24,7 @@ export const Wrapper = styled.nav`
 
       &:hover, &.active {
         color: #fff;
-        background-color: ${(props) => props.theme.secondary};
+        background-color: ${(props) => props.theme.color.green};
       }
       a {
         text-decoration: none;

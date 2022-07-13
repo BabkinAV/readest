@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const StyledGalleryItem = styled.div`
   .gallery-item {
     &__title {
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: ${(props) => props.theme.fonts.primary};
     }
     &__author {
-      font-family: 'Nunito Sans', sans-serif;
+      font-family: ${(props) => props.theme.fonts.secondary};
       font-weight: bold;
       font-size: 12px;
       color: ${(props) => props.theme.color.gold};
@@ -25,7 +25,7 @@ export const StyledGalleryItem = styled.div`
       text-align: center;
     }
     &__readDate {
-      font-family: 'Nunito Sans', sans-serif;
+      font-family: ${(props) => props.theme.fonts.secondary};
       font-size: 14px;
     }
   }

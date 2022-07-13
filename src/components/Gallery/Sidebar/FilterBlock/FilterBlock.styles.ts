@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledFilterBlock = styled.div`
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: ${(props) => props.theme.fonts.primary};
   .filterBlock__header {
     color: red;
     padding: 13px 16px;

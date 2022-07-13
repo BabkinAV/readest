@@ -2,7 +2,6 @@ import React from 'react';
 import { StyledAddBook } from './AddBook.styles';
 import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
-import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 
 const AddBook = () => {
   const getBookCoverHandler = () => {
@@ -88,8 +87,6 @@ const AddBook = () => {
         </div>
       </div>
     </StyledAddBook>
-
-    //TODO: Add book component should follow the similar structure as Single Book. Show on the left the blank image, and on the right show a form to input information with book details (title, author name, date read, amount of pages). Should include ISBN13 field and 'get image' button (book cover is coming via open library api).
   );
 };
 

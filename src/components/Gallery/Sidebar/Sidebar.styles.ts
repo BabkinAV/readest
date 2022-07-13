@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledSidebar = styled.div`
   h3,
   label {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: ${(props) => props.theme.fonts.primary};
     font-weight: 400;
     font-style: italic;
     font-size: 16px;

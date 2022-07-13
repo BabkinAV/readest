@@ -14,14 +14,14 @@ export const StyledSingleBook = styled.div`
     }
     &__info {
       h1 {
-        font-family: 'Source Sans Pro', Arial, sans-serif;
+        font-family: ${(props) => props.theme.fonts.primary};
         font-weight: 500;
         font-size: 28px;
         margin-bottom: 30px;
       }
     }
     &__author {
-      font-family: 'Source Sans Pro', Arial, sans-serif;
+      font-family: ${(props) => props.theme.fonts.primary};
       margin-bottom: 30px;
       &--gold {
         color: ${(props) => props.theme.color.gold};
@@ -38,7 +38,7 @@ export const StyledSingleBook = styled.div`
     }
     &__date,
     &__pages {
-      font-family: 'Nunito Sans', sans-serif;
+      font-family: ${(props) => props.theme.fonts.secondary};
     }
   }
 `;
