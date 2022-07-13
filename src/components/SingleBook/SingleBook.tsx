@@ -27,7 +27,6 @@ const SingleBook: FC<SingleBookProps> = ({ id }) => {
       .get<openLibraryBook>(url + `${book!.ISBN13}.json`)
       .then((response) => {
         setBookInfo(response.data);
-        console.log(response.data);
         setIsBookInfoLoading(false);
       });
   }, [book]);

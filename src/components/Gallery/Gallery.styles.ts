@@ -10,6 +10,8 @@ export const Wrapper = styled.div`
     &__title {
       text-align: center;
       font-family: ${(props) => props.theme.fonts.primary};
+      padding-top: 20px;
+      padding-bottom: 20px;
 
 
     }

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledAddBook = styled.div`
   .addBook {
+    padding-top: 20px;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 20px;
@@ -17,6 +18,8 @@ export const StyledAddBook = styled.div`
       &__header {
         text-align: left;
         font-family: ${(props) => props.theme.fonts.primary};
+        padding-top: 15px;
+        padding-bottom: 15px;
 
         grid-column: span 2;
 
@@ -53,8 +56,7 @@ export const StyledAddBook = styled.div`
         }
         input {
           width: 90%;
-          height: 12px;
-          padding: 10px 12px;
+          padding: 8px 12px;
           font-size: 15px;
           line-height: 22px;
           font-family: ${(props) => props.theme.fonts.primary};
@@ -66,18 +68,18 @@ export const StyledAddBook = styled.div`
           appearance: none !important;
           vertical-align: middle;
           outline: none;
+
           &:active,
           &:focus {
             border: 1px solid #b4b4b4;
           }
         }
+
         &--isbn {
           input {
             margin-bottom: 20px;
           }
         }
-      }
-      &__header {
       }
       &__button {
         &--save {

@@ -5,11 +5,12 @@ interface Props {
   children?: ReactNode;
   className?: string;
   onClick?: () => void;
+  outlined?: boolean;
   // any props that come into the component
 }
 
-const Button = ({ children, onClick }: Props) => {
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
+const Button = ({ children, onClick, className, outlined }: Props) => {
+  return <StyledButton onClick={onClick} className={`${className} ${outlined ? 'outlined' : null }`}>{children}</StyledButton>;
 };
 
 export default Button;

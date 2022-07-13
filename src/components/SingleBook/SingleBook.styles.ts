@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledSingleBook = styled.div`
+  padding-top: 20px;
   .singleBook {
     display: grid;
     grid-template-columns: 1fr 2fr;

@@ -7,6 +7,8 @@ export const StyledSidebar = styled.div`
     font-weight: 400;
     font-style: italic;
     font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .sort {
     &__label {
@@ -15,6 +17,8 @@ export const StyledSidebar = styled.div`
 
     &__select {
       width: 100%;
+      padding-top: 15px;
+      padding-bottom: 15px;
 
       svg {
         position: absolute;
@@ -41,8 +45,6 @@ export const StyledSidebar = styled.div`
         option {
           white-space: pre;
         }
-
-
 
         &:focus {
           border: 2px solid #336b75;

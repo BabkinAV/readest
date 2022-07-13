@@ -53,6 +53,7 @@ const AddBook = () => {
                 name="date-read"
                 min="2018-01-01"
                 max="2018-12-31"
+                required
               />
             </div>
             <div className="addBook-form__group">
@@ -77,12 +78,12 @@ const AddBook = () => {
             </div>
           </div>
 
-          <button className="addBook-form__button addBook-form__button--save">
+          <Button className="addBook-form__button addBook-form__button--save">
             Save
-          </button>
-          <button className="addBook-form__button addBook-form__button--clear">
+          </Button>
+          <Button className="addBook-form__button" outlined={true}>
             Clear
-          </button>
+          </Button>
           <form onSubmit={() => {}}></form>
         </div>
       </div>
