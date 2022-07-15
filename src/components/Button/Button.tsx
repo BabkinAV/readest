@@ -4,7 +4,7 @@ import { StyledButton } from './Button.styles';
 interface Props {
   children?: ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   outlined?: boolean;
   // any props that come into the component
 }

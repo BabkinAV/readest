@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import { StyledAddBook } from './AddBook.styles';
 import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
 
-const AddBook = () => {
-  const getBookCoverHandler = () => {
-    console.log('clicked!')
+const AddBook =  () => {
+  const getBookCoverHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // axios(
+    //   `https://covers.openlibrary.org/b/isbn/${
+    //     isbnRef.current!['value']
+    //   }-L.jpg?default=false`
+    // ).then((response) => setIsbn(response.data));
+
+    const res = await axios.get(
+      `https://covers.openlibrary.org/b/isbn/${
+        isbnRef.current!['value']
+      }-L.jpg?default=false`,  {
+        responseType: 'blob',
+      } 
+    );
+    const imageBlob = new Blob([res.data]);
+    const imageObjectURL = URL.createObjectURL(imageBlob);
+    setIsbn(imageObjectURL);
+
     //TODO: create book cover fetch functionality
-  }
+  };
+
+  const isbnRef = useRef(null);
+  const [isbn, setIsbn] = useState<string>(emptyCover);
+
   return (
     <StyledAddBook>
       <div className="addBook">
         <div className="addBook__image">
-          <img src={emptyCover} alt="empty cover" />
+          <img src={isbn} alt="empty cover" />
         </div>
         <div className="addBook__form addBook-form">
           <div className="addBook-form__header addBook-form__header--main">
@@ -73,15 +96,24 @@ const AddBook = () => {
             </div>
             <div className="addBook-form__group addBook-form__group--isbn">
               <label htmlFor="isbn">ISBN code (for book cover)</label>
-              <input id="isbn" name="isbn" type="text" />
-              <Button className="addBook-form__button" onClick={getBookCoverHandler}>Get book cover</Button>
+              <input id="isbn" name="isbn" type="text" ref={isbnRef} />
+              <Button
+                className="addBook-form__button"
+                onClick={getBookCoverHandler}
+              >
+                Get book cover
+              </Button>
             </div>
           </div>
 
           <Button className="addBook-form__button addBook-form__button--save">
             Save
           </Button>
-          <Button className="addBook-form__button" outlined={true}>
+          <Button
+            className="addBook-form__button"
+            outlined={true}
+            onClick={getBookCoverHandler}
+          >
             Clear
           </Button>
           <form onSubmit={() => {}}></form>
