@@ -3,10 +3,11 @@ const theme = {
     primary: "'Source Sans Pro', sans-serif",
     secondary: "'Nunito Sans', sans-serif",
   },
-  color: {
+  colors: {
     green: '#336b75',
     gold: '#9e866b;',
     grey: '#a8a8a8',
+    white: '#fff'
   },
 };
 

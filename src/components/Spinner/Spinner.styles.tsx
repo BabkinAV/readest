@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledSpinner = styled.div`
+interface Props {
+  color?: 'grey' | 'white';
+}
+
+
+export const StyledSpinner = styled.div<Props>`
   @keyframes spinner {
     0% {
       transform: rotate(0deg);
@@ -16,7 +21,7 @@ export const StyledSpinner = styled.div`
     svg {
       width: 20px;
       height: 20px;
-      color: ${(props) => props.theme.color.grey};
+      color: ${(props) => props.color ? props.theme.colors[props.color] : props.theme.colors.grey};
 
       animation: spinner 1.5s linear infinite;
     }

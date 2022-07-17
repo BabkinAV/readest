@@ -4,28 +4,28 @@ import { StyledAddBook } from './AddBook.styles';
 import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
 
-const AddBook =  () => {
-  const getBookCoverHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    // axios(
-    //   `https://covers.openlibrary.org/b/isbn/${
-    //     isbnRef.current!['value']
-    //   }-L.jpg?default=false`
-    // ).then((response) => setIsbn(response.data));
-
-    const res = await axios.get(
-      `https://covers.openlibrary.org/b/isbn/${
-        isbnRef.current!['value']
-      }-L.jpg?default=false`,  {
-        responseType: 'blob',
-      } 
-    );
-    const imageBlob = new Blob([res.data]);
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setIsbn(imageObjectURL);
-
-    //TODO: create book cover fetch functionality
+const AddBook = () => {
+  const [isCoverLoading, setIsCoverLoading] = useState(false);
+  const getBookCoverHandler = () => {
+    setIsCoverLoading(true);
+    //TODO: Error handling for improper isbn code
+    axios
+      .get(
+        `https://covers.openlibrary.org/b/isbn/${
+          isbnRef.current!['value']
+        }-L.jpg?default=false`,
+        {
+          responseType: 'blob',
+        }
+      )
+      .then((res) => {
+        const imageBlob = new Blob([res.data]);
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        setIsbn(imageObjectURL);
+      })
+      .finally(() => {
+        setIsCoverLoading(false);
+      });
   };
 
   const isbnRef = useRef(null);
@@ -100,6 +100,7 @@ const AddBook =  () => {
               <Button
                 className="addBook-form__button"
                 onClick={getBookCoverHandler}
+                loading={isCoverLoading}
               >
                 Get book cover
               </Button>

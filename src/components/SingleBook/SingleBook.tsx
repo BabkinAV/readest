@@ -59,6 +59,11 @@ const SingleBook: FC<SingleBookProps> = ({ id }) => {
               Date read: <b>{dayjs(book['Date Read']).format('DD.MM.YYYY')}</b>
             </span>
           </div>
+          <div className="singleBook__date">
+            <span>
+              ISBN code: <b>{book.ISBN13}</b>
+            </span>
+          </div>
           <div className="singleBook__pages">
             <span>
               Number of pages:{' '}

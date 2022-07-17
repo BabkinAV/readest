@@ -3,12 +3,11 @@ import styled from 'styled-components';
 export const StyledButton = styled.button.attrs((props) => ({
   className: props.className,
 }))`
-  /* box-sizing: border-box; */
-  background: ${(props) => props.theme.color.green};
-  border: 2px solid ${(props) => props.theme.color.green};
+  position: relative;
+  background: ${(props) => props.theme.colors.green};
+  border: 2px solid ${(props) => props.theme.colors.green};
   color: #fff;
   display: inline-block;
-  /* border: none; */
   padding: 0 16px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-family: ${(props) => props.theme.fonts.primary};
@@ -29,7 +28,15 @@ export const StyledButton = styled.button.attrs((props) => ({
   }
 
   &.outlined {
-    color: ${(props) => props.theme.color.green};
+    color: ${(props) => props.theme.colors.green};
     background: #fff;
+  }
+  .spinner {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  &.loading {
+    color: transparent;
   }
 `;

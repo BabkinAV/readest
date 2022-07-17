@@ -25,7 +25,7 @@ export const StyledSingleBook = styled.div`
       font-family: ${(props) => props.theme.fonts.primary};
       margin-bottom: 30px;
       &--gold {
-        color: ${(props) => props.theme.color.gold};
+        color: ${(props) => props.theme.colors.gold};
         font-size: 18px;
       }
       &--snippet {

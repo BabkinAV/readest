@@ -11,7 +11,7 @@ export const StyledGalleryItem = styled.div`
       font-family: ${(props) => props.theme.fonts.secondary};
       font-weight: bold;
       font-size: 12px;
-      color: ${(props) => props.theme.color.gold};
+      color: ${(props) => props.theme.colors.gold};
       padding-bottom: 5px;
     }
     &__image {
