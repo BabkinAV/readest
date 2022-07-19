@@ -8,24 +8,25 @@ const AddBook = () => {
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const getBookCoverHandler = () => {
     setIsCoverLoading(true);
-    //TODO: Error handling for improper isbn code
-    axios
-      .get(
-        `https://covers.openlibrary.org/b/isbn/${
-          isbnRef.current!['value']
-        }-L.jpg?default=false`,
-        {
-          responseType: 'blob',
-        }
-      )
-      .then((res) => {
-        const imageBlob = new Blob([res.data]);
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        setIsbn(imageObjectURL);
-      })
-      .finally(() => {
-        setIsCoverLoading(false);
-      });
+    if (isbnRef.current) {
+      axios
+        .get(
+          `https://covers.openlibrary.org/b/isbn/${isbnRef.current['value']}-L.jpg?default=false`,
+          {
+            responseType: 'blob',
+          }
+        )
+        .then((res) => {
+          const imageBlob = new Blob([res.data]);
+          const imageObjectURL = URL.createObjectURL(imageBlob);
+          setIsbn(imageObjectURL);
+        })
+        .finally(() => {
+          setIsCoverLoading(false);
+        });
+    } else {
+      //TODO: Error handling for improper or absent isbn code
+    }
   };
 
   const isbnRef = useRef(null);
