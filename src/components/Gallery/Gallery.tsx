@@ -1,4 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
+
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { replaceFullData } from '../../store/slices/bookSlice';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from '../GalleryItem/GalleryItem';
 import Sidebar from './Sidebar/Sidebar';
@@ -15,8 +18,10 @@ export type SortType =
   | 'Date Read';
 
 const Gallery: FC = () => {
-  const [books, setBooks] = useState<Book[]>(data);
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([]);
+  const books = useAppSelector((state) => state.books.booksArray);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (appliedFilters.length > 0) {
       const filteredBooks = data.filter((book: Book) => {
@@ -45,18 +50,29 @@ const Gallery: FC = () => {
             }))
         );
       });
-      setBooks(filteredBooks);
+      dispatch(replaceFullData(filteredBooks))
     } else {
-      setBooks(data);
+      dispatch(replaceFullData(data))
     }
-  }, [appliedFilters]);
+  }, [appliedFilters, dispatch]);
 
+  const authors: string[] = createArrayOfUniqueValues<string>(
+    data,
+    'Author l-f',
+    true
+  );
 
-  const authors: string[] = createArrayOfUniqueValues<string>(data, 'Author l-f', true);
+  const ratings: number[] = createArrayOfUniqueValues<number>(
+    data,
+    'My Rating',
+    false
+  );
 
-  const ratings: number[] = createArrayOfUniqueValues<number>(data, 'My Rating', false);
-
-  const yearsRead: string[] = createArrayOfUniqueValues<string>(data, 'Date Read', false);
+  const yearsRead: string[] = createArrayOfUniqueValues<string>(
+    data,
+    'Date Read',
+    false
+  );
 
   const handleSortTypeChange = (sortProperty: SortType) => {
     //if sort desc order should be set to negative
@@ -64,7 +80,7 @@ const Gallery: FC = () => {
     if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
       order = -1;
     }
-    setBooks((books) => {
+    
       const sorted = [...books].sort((a, b) => {
         if (a[sortProperty] < b[sortProperty]) {
           return -order;
@@ -75,8 +91,7 @@ const Gallery: FC = () => {
         return 0;
       });
 
-      return sorted;
-    });
+    dispatch(replaceFullData(sorted));
   };
 
   const handleXmarkClick = (filterValue: string | number) => {

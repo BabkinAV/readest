@@ -1,15 +1,20 @@
 import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
+
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 import theme from '../components/AppTheme';
 import '../fontawesome';
 
 const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>{children}</BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   );
 };
 
