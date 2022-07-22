@@ -13,3 +13,10 @@ export interface AppliedFilter {
   category: 'author' | 'rating' | 'year';
   value: string | number;
 }
+
+export type SortType =
+| 'Book Id'
+| 'Title'
+| 'Author'
+| 'My Rating'
+| 'Date Read';

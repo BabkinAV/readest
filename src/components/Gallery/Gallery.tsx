@@ -1,24 +1,17 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { replaceFullData } from '../../store/slices/bookSlice';
+import { replaceFullData, sortData, addFilter, removeFilter } from '../../store/slices/bookSlice';
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from '../GalleryItem/GalleryItem';
 import Sidebar from './Sidebar/Sidebar';
 import data from '../../data';
 import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 import { Book } from '../../data.model';
-import { AppliedFilter } from '../../data.model';
-
-export type SortType =
-  | 'Book Id'
-  | 'Title'
-  | 'Author'
-  | 'My Rating'
-  | 'Date Read';
 
 const Gallery: FC = () => {
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([]);
+  //TODO: move appliedFilters state to redux store
+  const appliedFilters = useAppSelector((state) => state.books.appliedFilters)
   const books = useAppSelector((state) => state.books.booksArray);
   const dispatch = useAppDispatch();
 
@@ -50,9 +43,9 @@ const Gallery: FC = () => {
             }))
         );
       });
-      dispatch(replaceFullData(filteredBooks))
+      dispatch(replaceFullData(filteredBooks));
     } else {
-      dispatch(replaceFullData(data))
+      dispatch(replaceFullData(data));
     }
   }, [appliedFilters, dispatch]);
 
@@ -74,46 +67,6 @@ const Gallery: FC = () => {
     false
   );
 
-  const handleSortTypeChange = (sortProperty: SortType) => {
-    //if sort desc order should be set to negative
-    let order = 1;
-    if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
-      order = -1;
-    }
-    
-      const sorted = [...books].sort((a, b) => {
-        if (a[sortProperty] < b[sortProperty]) {
-          return -order;
-        }
-        if (a[sortProperty] > b[sortProperty]) {
-          return order;
-        }
-        return 0;
-      });
-
-    dispatch(replaceFullData(sorted));
-  };
-
-  const handleXmarkClick = (filterValue: string | number) => {
-    const modifiedAppliedFilters = appliedFilters.filter(
-      (arrayItem) => arrayItem.value !== filterValue
-    );
-    setAppliedFilters(modifiedAppliedFilters);
-  };
-  const handleFilterClick = (addedElement: AppliedFilter) => {
-    // const newElement: AppliedFilter = {category: 'author', value: addedElement};
-    if (
-      appliedFilters.findIndex(
-        (element) => element.value === addedElement.value
-      ) === -1
-    ) {
-      setAppliedFilters((oldFiltersArray) => [
-        ...oldFiltersArray,
-        { category: addedElement.category, value: addedElement.value },
-      ]);
-    }
-  };
-
   return (
     <Wrapper className="gallery">
       <div className="gallery__title">
@@ -121,13 +74,15 @@ const Gallery: FC = () => {
       </div>
       <div className="gallery__wrapper">
         <Sidebar
-          handleSortTypeChange={handleSortTypeChange}
+          handleSortTypeChange={(sortProperty) =>
+            dispatch(sortData(sortProperty))
+          }
           authors={authors}
           yearsRead={yearsRead}
           ratings={ratings}
           appliedFilters={appliedFilters}
-          handleXmarkClick={handleXmarkClick}
-          handleFilterClick={handleFilterClick}
+          handleXmarkClick={(filterValue) => dispatch(removeFilter(filterValue))}
+          handleFilterClick={(addedElement) => {dispatch(addFilter(addedElement))}}
         />
         <div className="gallery__container">
           {books.map((el) => {
