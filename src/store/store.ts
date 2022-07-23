@@ -1,16 +1,31 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  combineReducers,
+  PreloadedState,
+} from '@reduxjs/toolkit';
 import booksReducer from './slices/bookSlice';
 
+const rootReducer = combineReducers({
+  books: booksReducer,
+});
 
-export const store = configureStore({
-  reducer: {
-    books: booksReducer
-  },
-  devTools: true
-})
+export function setupStore(preloadedState?: PreloadedState<RootState>) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    devTools: true,
+  });
+}
 
+// export const store = configureStore({
+//   reducer: rootReducer,
+//   devTools: true
+// })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = AppStore['dispatch']
+
+export const store = setupStore();

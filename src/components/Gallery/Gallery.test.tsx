@@ -232,7 +232,6 @@ describe('sorting and filters functionality for gallery', () => {
   test('checking double filter click', () => {
     render(<Gallery />);
     // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug();
 
     let galleryItemsAll = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
     console.log(galleryItemsAll.length);
@@ -246,7 +245,7 @@ describe('sorting and filters functionality for gallery', () => {
 
     //check if gallery items are filtered
 
-    // expect(galleryItems).toHaveLength(3)
+    expect(galleryItems).toHaveLength(3)
 
     //TODO: deal with Redux not reset after test
 

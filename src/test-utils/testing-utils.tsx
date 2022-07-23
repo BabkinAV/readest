@@ -1,30 +1,50 @@
-import React, { FC, ReactElement } from 'react';
+import React, {PropsWithChildren } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
+
+
+import type { PreloadedState } from '@reduxjs/toolkit';
+
+import type { AppStore, RootState } from '../store/store';
+
 
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import {setupStore } from '../store/store';
 import theme from '../components/AppTheme';
 import '../fontawesome';
 
-const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>{children}</BrowserRouter>
-      </ThemeProvider>
-    </Provider>
-  );
-};
+// This type interface extends the default options for render from RTL, as well
+// as allows the user to specify other things such as initialState, store.
+interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
+  preloadedState?: PreloadedState<RootState>;
+  store?: AppStore;
+}
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-) => render(ui, { wrapper: AllTheProviders, ...options });
+
+function renderWithProviders(
+  ui: React.ReactElement,
+  {
+    preloadedState = {},
+    // Automatically create a store instance if no store was passed in
+    store = setupStore(preloadedState),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) {
+  function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+         <BrowserRouter>{children}</BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    );
+  }
+  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+}
 
 // re-export everything
 export * from '@testing-library/react';
 
 // override render method
-export { customRender as render };
+export { renderWithProviders as render };
