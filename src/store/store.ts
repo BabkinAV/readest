@@ -17,10 +17,6 @@ export function setupStore(preloadedState?: PreloadedState<RootState>) {
   });
 }
 
-// export const store = configureStore({
-//   reducer: rootReducer,
-//   devTools: true
-// })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof rootReducer>;
