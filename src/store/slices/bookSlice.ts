@@ -6,6 +6,7 @@ import { Book } from '../../data.model';
 
 import data from '../../data';
 import { SortType, AppliedFilter } from '../../data.model';
+import filterBooksArray from '../helpers/filterBooksArray';
 
 interface BookState {
   booksArray: Book[];
@@ -53,32 +54,7 @@ export const bookSlice = createSlice({
         newFilters.push(action.payload);
       }
 
-      const filteredBooks = initialState.booksArray.filter((book: Book) => {
-        //checking if specific filter categories are present on filter array
-
-        const isFilterListNotIncludes = {
-          author: !newFilters.some((elem) => elem.category === 'author'),
-          year: !newFilters.some((elem) => elem.category === 'year'),
-          rating: !newFilters.some((elem) => elem.category === 'rating'),
-        };
-
-        //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
-        //TODO: review edge cases (like author name is equal to some number etc.)
-        return (
-          (isFilterListNotIncludes.author ||
-            newFilters.some((distinctEl) => {
-              return distinctEl.value === book['Author l-f'];
-            })) &&
-          (isFilterListNotIncludes.year ||
-            newFilters.some((distinctEl) => {
-              return distinctEl.value === book['Date Read'].slice(0, 4);
-            })) &&
-          (isFilterListNotIncludes.rating ||
-            newFilters.some((distinctEl) => {
-              return distinctEl.value === book['My Rating'];
-            }))
-        );
-      });
+      const filteredBooks = filterBooksArray(initialState.booksArray, newFilters);
       return {
         ...state,
         appliedFilters: newFilters,
@@ -91,32 +67,7 @@ export const bookSlice = createSlice({
       );
 
       if (newFilters.length > 0) {
-        const filteredBooks = initialState.booksArray.filter((book: Book) => {
-          //checking if specific filter categories are present on filter array
-
-          const isFilterListNotIncludes = {
-            author: !newFilters.some((elem) => elem.category === 'author'),
-            year: !newFilters.some((elem) => elem.category === 'year'),
-            rating: !newFilters.some((elem) => elem.category === 'rating'),
-          };
-
-          //if specific filter categories are present - checking if appliedFilters array contains object with value equal to current book's specific property value .
-          //TODO: review edge cases (like author name is equal to some number etc.)
-          return (
-            (isFilterListNotIncludes.author ||
-              newFilters.some((distinctEl) => {
-                return distinctEl.value === book['Author l-f'];
-              })) &&
-            (isFilterListNotIncludes.year ||
-              newFilters.some((distinctEl) => {
-                return distinctEl.value === book['Date Read'].slice(0, 4);
-              })) &&
-            (isFilterListNotIncludes.rating ||
-              newFilters.some((distinctEl) => {
-                return distinctEl.value === book['My Rating'];
-              }))
-          );
-        });
+        const filteredBooks = filterBooksArray(initialState.booksArray, newFilters);
         return {
           ...state,
           appliedFilters: newFilters,

@@ -9,10 +9,11 @@ import data from '../../data';
 import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 
 const Gallery: FC = () => {
-  //TODO: move appliedFilters state to redux store
   const appliedFilters = useAppSelector((state) => state.books.appliedFilters)
   const books = useAppSelector((state) => state.books.booksArray);
   const dispatch = useAppDispatch();
+
+  //TODO: move unique values creators to store
 
 
   const authors: string[] = createArrayOfUniqueValues<string>(
