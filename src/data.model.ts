@@ -1,4 +1,4 @@
-export interface Book {
+export type Book =  {
   'Book Id': number;
   Title: string;
   Author: string;

@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 
 import type { RootState } from '../store';
+
+import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 
 import { Book } from '../../data.model';
 
@@ -25,6 +27,7 @@ export const bookSlice = createSlice({
     replaceFullData: (state, action: PayloadAction<Book[]>) => {
       state.booksArray = action.payload;
     },
+    //TODO: make sortData a selector
     sortData: (state, action: PayloadAction<SortType>) => {
       let order = 1;
       const sortProperty = action.payload;
@@ -54,11 +57,9 @@ export const bookSlice = createSlice({
         newFilters.push(action.payload);
       }
 
-      const filteredBooks = filterBooksArray(initialState.booksArray, newFilters);
       return {
         ...state,
         appliedFilters: newFilters,
-        booksArray: filteredBooks,
       };
     },
     removeFilter: (state, action: PayloadAction<string | number>) => {
@@ -66,16 +67,10 @@ export const bookSlice = createSlice({
         (arrayItem) => arrayItem.value !== action.payload
       );
 
-      if (newFilters.length > 0) {
-        const filteredBooks = filterBooksArray(initialState.booksArray, newFilters);
-        return {
-          ...state,
-          appliedFilters: newFilters,
-          booksArray: filteredBooks,
-        };
-      } else {
-        return { ...state, appliedFilters: newFilters, booksArray: initialState.booksArray };
-      }
+      return {
+        ...state,
+        appliedFilters: newFilters,
+      };
     },
   },
 });
@@ -84,5 +79,45 @@ export const bookData = (state: RootState) => state.books.booksArray;
 
 export const { replaceFullData, sortData, addFilter, removeFilter } =
   bookSlice.actions;
+
+export const bookFiltersSelector = (state: RootState) =>
+  state.books.appliedFilters;
+
+export const filteredBooksArraySelector = createSelector(
+  (state: RootState) => state.books.booksArray,
+  (state: RootState) => state.books.appliedFilters,
+  (booksArray: Book[], AppliedFilters: AppliedFilter[]) => {
+    const filteredBooks = filterBooksArray(booksArray, AppliedFilters);
+    return filteredBooks;
+  }
+);
+
+export const authorsSelector = (state: RootState) => {
+  const authors: string[] = createArrayOfUniqueValues<string>(
+    state.books.booksArray,
+    'Author l-f',
+    true
+  );
+
+  return authors;
+};
+export const ratingsSelector = (state: RootState) => {
+  const ratings: number[] = createArrayOfUniqueValues<number>(
+    state.books.booksArray,
+    'My Rating',
+    false
+  );
+
+  return ratings;
+};
+export const yearsSelector = (state: RootState) => {
+  const years: string[] = createArrayOfUniqueValues<string>(
+    state.books.booksArray,
+    'Date Read',
+    true
+  );
+
+  return years;
+};
 
 export default bookSlice.reducer;

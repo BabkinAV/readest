@@ -2,37 +2,21 @@ import React, { FC} from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {  sortData, addFilter, removeFilter } from '../../store/slices/bookSlice';
+
+import { bookFiltersSelector, filteredBooksArraySelector, authorsSelector, ratingsSelector, yearsSelector } from '../../store/slices/bookSlice';
+
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from '../GalleryItem/GalleryItem';
 import Sidebar from './Sidebar/Sidebar';
-import data from '../../data';
-import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 
 const Gallery: FC = () => {
-  const appliedFilters = useAppSelector((state) => state.books.appliedFilters)
-  const books = useAppSelector((state) => state.books.booksArray);
+  const appliedFilters = useAppSelector(bookFiltersSelector)
+  const authors = useAppSelector(authorsSelector);
+  const yearsRead = useAppSelector(yearsSelector);
+  const ratings = useAppSelector(ratingsSelector)
+  const filteredBooks = useAppSelector(filteredBooksArraySelector);
   const dispatch = useAppDispatch();
 
-  //TODO: move unique values creators to store
-
-
-  const authors: string[] = createArrayOfUniqueValues<string>(
-    data,
-    'Author l-f',
-    true
-  );
-
-  const ratings: number[] = createArrayOfUniqueValues<number>(
-    data,
-    'My Rating',
-    false
-  );
-
-  const yearsRead: string[] = createArrayOfUniqueValues<string>(
-    data,
-    'Date Read',
-    false
-  );
 
   return (
     <Wrapper className="gallery">
@@ -52,7 +36,7 @@ const Gallery: FC = () => {
           handleFilterClick={(addedElement) => {dispatch(addFilter(addedElement))}}
         />
         <div className="gallery__container">
-          {books.map((el) => {
+          {filteredBooks.map((el) => {
             return (
               <GalleryItem
                 key={el['Book Id']}
