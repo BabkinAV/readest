@@ -1,4 +1,16 @@
-import React, { FC } from 'react';
+import React from 'react';
+
+//Redux stuff
+
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+import { sortData } from '../../../store/slices/bookSlice';
+import {
+  bookFiltersSelector,
+  authorsSelector,
+  ratingsSelector,
+  yearsSelector,
+} from '../../../store/slices/bookSlice';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { StyledSidebar } from './Sidebar.styles';
@@ -6,35 +18,17 @@ import { StyledSidebar } from './Sidebar.styles';
 import { SortType } from '../../../data.model';
 import FilterBlock from './FilterBlock/FilterBlock';
 import AppliedFilters from '../../AppliedFilters/AppliedFilters';
-import { AppliedFilter } from '../../../data.model';
 
-type SidebarProps = {
-  handleSortTypeChange: (sortType: SortType) => void;
-  authors: string[];
-  ratings: number[];
-  appliedFilters: AppliedFilter[];
-  handleXmarkClick: (p: string | number) => void;
-  handleFilterClick: (p: AppliedFilter) => void;
-  yearsRead: string[];
-};
+const Sidebar = () => {
+  const appliedFiltersArray = useAppSelector(bookFiltersSelector);
+  const authors = useAppSelector(authorsSelector);
+  const yearsRead = useAppSelector(yearsSelector);
+  const ratings = useAppSelector(ratingsSelector);
 
-const Sidebar: FC<SidebarProps> = ({
-  handleSortTypeChange,
-  authors,
-  ratings,
-  yearsRead,
-  appliedFilters,
-  handleXmarkClick,
-  handleFilterClick,
-}) => {
+  const dispatch = useAppDispatch();
   return (
     <StyledSidebar className="sidebar">
-      {appliedFilters.length > 0 && (
-        <AppliedFilters
-          appliedFilters={appliedFilters}
-          handleXmarkClick={handleXmarkClick}
-        />
-      )}
+      {appliedFiltersArray.length > 0 && <AppliedFilters />}
       <div className="sort">
         <label className="sort__label" htmlFor="sort-select">
           Sort by:
@@ -45,7 +39,9 @@ const Sidebar: FC<SidebarProps> = ({
           <select
             name="sort__dropdown"
             id="sort-select"
-            onChange={(e) => handleSortTypeChange(e.target.value as SortType)}
+            onChange={(e) => {
+              dispatch(sortData(e.target.value as SortType));
+            }}
           >
             <option value="">--Please choose--</option>
             <option value="Title">Title</option>
@@ -57,21 +53,9 @@ const Sidebar: FC<SidebarProps> = ({
       </div>
 
       <h3>Choose filters:</h3>
-      <FilterBlock
-        items={authors}
-        category="author"
-        onFilterClick={handleFilterClick}
-      />
-      <FilterBlock
-        items={ratings}
-        category="rating"
-        onFilterClick={handleFilterClick}
-      />
-      <FilterBlock
-        items={yearsRead}
-        category="year"
-        onFilterClick={handleFilterClick}
-      />
+      <FilterBlock items={authors} category="author" />
+      <FilterBlock items={ratings} category="rating" />
+      <FilterBlock items={yearsRead} category="year" />
     </StyledSidebar>
   );
 };

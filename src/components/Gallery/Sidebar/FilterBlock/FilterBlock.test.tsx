@@ -16,7 +16,7 @@ const authors: string[] = createArrayOfUniqueValues<string>(
 
 test('author list expand functionality', async () => {
   render(
-    <FilterBlock category="author" items={authors} onFilterClick={jest.fn()} />
+    <FilterBlock category="author" items={authors} />
   );
   let authorListsArray = screen.getAllByRole('list');
   expect(authorListsArray.length).toBe(1);

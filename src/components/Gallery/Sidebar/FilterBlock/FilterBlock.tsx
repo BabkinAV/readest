@@ -1,24 +1,35 @@
 import { FC, useState } from 'react';
+
+//Redux stuff
+import { useAppDispatch } from '../../../../store/hooks';
+import { addFilter } from '../../../../store/slices/bookSlice';
+
+//Transition-modules stuff
 import { Transition } from 'react-transition-group';
 import { StyledFilterBlock } from './FilterBlock.styles';
 import { AnimatedUl } from './AnimatedUl.styles';
-import { AppliedFilter } from '../../../../data.model';
+
 import StarRating from '../StarRating/StarRating';
 
 type FilterBlockProps = {
-  items: (string | number) [] ;
-  onFilterClick: (p: AppliedFilter) => void;
+  items: (string | number)[];
   category: 'author' | 'rating' | 'year';
 };
 
-const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) => {
+const FilterBlock: FC<FilterBlockProps> = ({ items, category }) => {
+  const dispatch = useAppDispatch();
+
   const [additionalBlockSegmentsIsShown, setAdditionalBlockSegmentsIsShown] =
     useState<boolean>(false);
   const onMoreClickHandler = () => {
     setAdditionalBlockSegmentsIsShown((prevState) => !prevState);
   };
   const title =
-    category === 'year' ? 'Year read' : category === 'rating' ? 'My rating' : 'author';
+    category === 'year'
+      ? 'Year read'
+      : category === 'rating'
+      ? 'My rating'
+      : 'author';
   return (
     <StyledFilterBlock className="filterBlock">
       <div className="filterBlock__header">{title.toUpperCase()}</div>
@@ -28,9 +39,15 @@ const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) =
             {items.slice(0, 5).map((el) => (
               <li
                 key={items.indexOf(el)}
-                onClick={() => onFilterClick({ category, value: el })}
+                onClick={() => {
+                  dispatch(addFilter({ category, value: el }));
+                }}
               >
-                {(category === 'rating') ? (<StarRating rating={el as number}/>) : (<span>{el}</span>)}
+                {category === 'rating' ? (
+                  <StarRating rating={el as number} />
+                ) : (
+                  <span>{el}</span>
+                )}
               </li>
             ))}
           </ul>
@@ -57,9 +74,9 @@ const FilterBlock: FC<FilterBlockProps> = ({ items, onFilterClick, category }) =
                   {items.slice(5).map((el) => (
                     <li
                       key={items.indexOf(el)}
-                      onClick={() =>
-                        onFilterClick({ category: 'author', value: el })
-                      }
+                      onClick={() => {
+                        dispatch(addFilter({ category, value: el }));
+                      }}
                     >
                       <span>{el}</span>
                     </li>
