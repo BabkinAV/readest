@@ -3,7 +3,7 @@ import React, { FC} from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {  sortData, addFilter, removeFilter } from '../../store/slices/bookSlice';
 
-import { bookFiltersSelector, filteredBooksArraySelector, authorsSelector, ratingsSelector, yearsSelector } from '../../store/slices/bookSlice';
+import { bookFiltersSelector, filteredBooksArraySelector,sortedFilteredBooksArraySelector, authorsSelector, ratingsSelector, yearsSelector } from '../../store/slices/bookSlice';
 
 import { Wrapper } from './Gallery.styles';
 import GalleryItem from '../GalleryItem/GalleryItem';
@@ -15,6 +15,7 @@ const Gallery: FC = () => {
   const yearsRead = useAppSelector(yearsSelector);
   const ratings = useAppSelector(ratingsSelector)
   const filteredBooks = useAppSelector(filteredBooksArraySelector);
+  const sortedFilteredBooks = useAppSelector(sortedFilteredBooksArraySelector);
   const dispatch = useAppDispatch();
 
 
@@ -36,7 +37,7 @@ const Gallery: FC = () => {
           handleFilterClick={(addedElement) => {dispatch(addFilter(addedElement))}}
         />
         <div className="gallery__container">
-          {filteredBooks.map((el) => {
+          {sortedFilteredBooks.map((el) => {
             return (
               <GalleryItem
                 key={el['Book Id']}

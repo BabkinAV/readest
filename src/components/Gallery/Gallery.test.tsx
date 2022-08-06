@@ -72,7 +72,7 @@ describe('sorting and filters functionality for gallery', () => {
 
     expect(galleryItems).toHaveLength(2);
 
-    expect(galleryItems[1].alt).toContain('City of Stairs');
+    expect(galleryItems[0].alt).toContain('City of Stairs');
 
     setFilters = screen.getAllByTestId('set-filter__item');
 
@@ -178,7 +178,7 @@ describe('sorting and filters functionality for gallery', () => {
     });
     expect(appliedFilterHeader).toBeInTheDocument();
 
-    expect(galleryItems[0].alt).toContain('The Wisdom of Crowds');
+    expect(galleryItems[1].alt).toContain('The Wisdom of Crowds');
 
     //check if Applied filter item has been displayed
 
@@ -233,9 +233,6 @@ describe('sorting and filters functionality for gallery', () => {
     render(<Gallery />);
     // eslint-disable-next-line testing-library/no-debugging-utils
 
-    let galleryItemsAll = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
-    console.log(galleryItemsAll.length);
-
     //click one item filter item
     let yearFilterItem = screen.getByText(/^2021/);
     userEvent.click(yearFilterItem);
@@ -247,22 +244,7 @@ describe('sorting and filters functionality for gallery', () => {
 
     expect(galleryItems).toHaveLength(3)
 
-    //TODO: deal with Redux not reset after test
 
   })
 
-  // test('checking double filter click', () => {
-  //   render(<Gallery />);
-
-  //   //click one item filter item
-  //   let yearFilterItem = screen.getByText(/^2021/);
-  //   userEvent.click(yearFilterItem);
-
-  //   let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
-
-  //   //check if gallery items are filtered
-
-  //   expect(galleryItems).toHaveLength(3)
-
-  // })
 })

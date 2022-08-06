@@ -13,11 +13,13 @@ import filterBooksArray from '../helpers/filterBooksArray';
 interface BookState {
   booksArray: Book[];
   appliedFilters: AppliedFilter[];
+  sorting: SortType;
 }
 
 const initialState: BookState = {
   booksArray: data,
   appliedFilters: [],
+  sorting: 'Book Id',
 };
 
 export const bookSlice = createSlice({
@@ -29,23 +31,7 @@ export const bookSlice = createSlice({
     },
     //TODO: make sortData a selector
     sortData: (state, action: PayloadAction<SortType>) => {
-      let order = 1;
-      const sortProperty = action.payload;
-
-      if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
-        order = -1;
-      }
-
-      const sorted = [...state.booksArray].sort((a, b) => {
-        if (a[sortProperty] < b[sortProperty]) {
-          return -order;
-        }
-        if (a[sortProperty] > b[sortProperty]) {
-          return order;
-        }
-        return 0;
-      });
-      state.booksArray = sorted;
+      state.sorting = action.payload;
     },
     addFilter: (state, action: PayloadAction<AppliedFilter>) => {
       let newFilters: AppliedFilter[] = [...state.appliedFilters];
@@ -89,6 +75,29 @@ export const filteredBooksArraySelector = createSelector(
   (booksArray: Book[], AppliedFilters: AppliedFilter[]) => {
     const filteredBooks = filterBooksArray(booksArray, AppliedFilters);
     return filteredBooks;
+  }
+);
+
+export const sortedFilteredBooksArraySelector = createSelector(
+  filteredBooksArraySelector,
+  (state: RootState) => state.books.sorting,
+  (filteredBooksArray: Book[], sortProperty: SortType) => {
+    let order = 1;
+
+    if (sortProperty === 'My Rating' || sortProperty === 'Date Read') {
+      order = -1;
+    }
+
+    const sortedArray = [...filteredBooksArray].sort((a, b) => {
+      if (a[sortProperty] < b[sortProperty]) {
+        return -order;
+      }
+      if (a[sortProperty] > b[sortProperty]) {
+        return order;
+      }
+      return 0;
+    });
+    return sortedArray;
   }
 );
 
