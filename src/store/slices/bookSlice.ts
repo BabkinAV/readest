@@ -26,10 +26,9 @@ export const bookSlice = createSlice({
   name: 'bookData',
   initialState,
   reducers: {
-    replaceFullData: (state, action: PayloadAction<Book[]>) => {
-      state.booksArray = action.payload;
+    addBook: (state, action: PayloadAction<Book>) => {
+      state.booksArray.push(action.payload);
     },
-    //TODO: make sortData a selector
     sortData: (state, action: PayloadAction<SortType>) => {
       state.sorting = action.payload;
     },
@@ -63,7 +62,7 @@ export const bookSlice = createSlice({
 
 export const bookData = (state: RootState) => state.books.booksArray;
 
-export const { replaceFullData, sortData, addFilter, removeFilter } =
+export const { sortData, addFilter, removeFilter, addBook } =
   bookSlice.actions;
 
 export const bookFiltersSelector = (state: RootState) =>

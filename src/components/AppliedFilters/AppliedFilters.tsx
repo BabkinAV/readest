@@ -31,7 +31,6 @@ const AppliedFilters = () => {
             <FontAwesomeIcon
               className="set-filter__xmark"
               icon={['fas', 'xmark']}
-              // onClick={() => handleXmarkClick(el.value)}
               onClick={() => dispatch(removeFilter(el.value))}
             />
           </div>

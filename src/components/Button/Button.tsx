@@ -8,6 +8,7 @@ interface Props {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   outlined?: boolean;
   loading?: boolean;
+  type?: 'submit';
 }
 
 const Button = ({
