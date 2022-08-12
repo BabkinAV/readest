@@ -9,7 +9,7 @@ export const StyledStarRating = styled.div<Props>`
 
   .rating {
     &__star {
-      color: #ff9933;
+      color: ${(props) => props.theme.colors.goldDarker};
     }
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //Redux stuff
@@ -9,12 +9,14 @@ import axios from 'axios';
 import { StyledAddBook } from './AddBook.styles';
 import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
+import StarRatingInput from './StarRatingInput/StarRatingInput';
 
 const AddBook = () => {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const [isBookUploading, setIsBookUploading] = useState(false);
+  const [rating, setRating] = useState(0);
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
@@ -23,7 +25,6 @@ const AddBook = () => {
       firstName: { value: string };
       lastName: { value: string };
       'date-read': { value: string };
-      rating: { value: string };
       pages: { value: string };
       isbn: { value: string };
     };
@@ -33,7 +34,7 @@ const AddBook = () => {
         'Book Id': Math.trunc(Math.random() * 10000000),
         Title: target.title.value,
         Author: target.firstName.value + ' ' + target.lastName.value,
-        'My Rating': parseInt(target.rating.value),
+        'My Rating': rating,
         ISBN13: parseInt(target.isbn.value),
         'Date Read': target['date-read'].value,
         'Author l-f': target.lastName.value + ', ' + target.firstName.value,
@@ -41,14 +42,12 @@ const AddBook = () => {
     );
 
     setIsBookUploading(true);
-    
 
     //***draft state to mimic the db async upload***
 
     setTimeout(() => {
       setIsBookUploading(false);
       navigate('/');
-
     }, 1000);
   };
   const getBookCoverHandler = () => {
@@ -134,15 +133,14 @@ const AddBook = () => {
                 type="date"
                 id="date-read"
                 name="date-read"
-                min="2018-01-01"
-                max="2018-12-31"
+                min="2010-01-01"
+                max="2030-12-31"
                 required
               />
             </div>
             <div className="addBook-form__group">
-              {/* TODO: Make my rating as hoverable element */}
               <label htmlFor="rating">My rating</label>
-              <input type="number" id="rating" name="rating" min="1" max="5" />
+              <StarRatingInput rating={rating} onStarClick={(index) => {setRating(index)}}/>
             </div>
           </div>
 

@@ -7,7 +7,8 @@ const theme = {
     green: '#336b75',
     gold: '#9e866b;',
     grey: '#a8a8a8',
-    white: '#fff'
+    white: '#fff',
+    goldDarker: '#ff9933'
   },
 };
 
