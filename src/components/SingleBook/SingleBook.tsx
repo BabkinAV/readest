@@ -5,16 +5,18 @@ import dayjs from 'dayjs';
 import { getBookById } from '../../data';
 import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 import { StyledSingleBook } from './SingleBook.styles';
+import { useParams } from 'react-router-dom';
 
-type SingleBookProps = {
-  id?: string;
+type QuizParams = {
+  id: string;
 };
 
 type openLibraryBook = {
   number_of_pages?: number;
 };
 
-const SingleBook: FC<SingleBookProps> = ({ id }) => {
+const SingleBook = () => {
+  const { id } = useParams<QuizParams>();
   const [bookInfo, setBookInfo] = useState<openLibraryBook>({});
   const [isBookInfoLoading, setIsBookInfoLoading] = useState<boolean>(true);
   let bookIdNum = parseInt(id!);

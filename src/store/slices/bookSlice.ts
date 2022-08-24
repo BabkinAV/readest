@@ -69,8 +69,8 @@ export const bookFiltersSelector = (state: RootState) =>
   state.books.appliedFilters;
 
 export const filteredBooksArraySelector = createSelector(
-  (state: RootState) => state.books.booksArray,
-  (state: RootState) => state.books.appliedFilters,
+  bookData,
+  bookFiltersSelector,
   (booksArray: Book[], AppliedFilters: AppliedFilter[]) => {
     const filteredBooks = filterBooksArray(booksArray, AppliedFilters);
     return filteredBooks;
@@ -127,5 +127,9 @@ export const yearsSelector = (state: RootState) => {
 
   return years;
 };
+
+export const singleBookSelector = (state: RootState) => {
+  //TODO: Create single book selector
+}
 
 export default bookSlice.reducer;

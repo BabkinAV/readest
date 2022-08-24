@@ -1,10 +1,11 @@
 import React from 'react';
-import {  Routes, Route } from 'react-router-dom';
-import SingleBookPage from './components/layout/SingleBookPage';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import MainPage from './components/layout/MainPage';
-import AddBookPage from './components/layout/AddBookPage';
 import TopNavigation from './components/layout/TopNavigation/TopNavigation';
+import { Container } from './App.styles';
+import Gallery from './components/Gallery/Gallery';
+import AddBook from './components/AddBook/AddBook';
+import SingleBook from './components/SingleBook/SingleBook';
 
 function App() {
   return (
@@ -14,11 +15,13 @@ function App() {
         <TopNavigation />
       </header>
       <main>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/add" element={<AddBookPage />} />
-          <Route path="/book/:bookId" element={<SingleBookPage />} />
-        </Routes>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Gallery />} />
+            <Route path="/add" element={<AddBook />} />
+            <Route path="/book/:bookId" element={<SingleBook />} />
+          </Routes>
+        </Container>
       </main>
     </div>
   );
