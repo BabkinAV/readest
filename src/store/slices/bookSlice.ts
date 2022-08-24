@@ -60,16 +60,17 @@ export const bookSlice = createSlice({
   },
 });
 
-export const bookData = (state: RootState) => state.books.booksArray;
+export const selectBooks = (state: RootState) => state.books.booksArray;
 
-export const { sortData, addFilter, removeFilter, addBook } =
-  bookSlice.actions;
+const selectBookId = (state: RootState, bookId: number) => bookId;
+
+export const { sortData, addFilter, removeFilter, addBook } = bookSlice.actions;
 
 export const bookFiltersSelector = (state: RootState) =>
   state.books.appliedFilters;
 
 export const filteredBooksArraySelector = createSelector(
-  bookData,
+  selectBooks,
   bookFiltersSelector,
   (booksArray: Book[], AppliedFilters: AppliedFilter[]) => {
     const filteredBooks = filterBooksArray(booksArray, AppliedFilters);
@@ -128,8 +129,12 @@ export const yearsSelector = (state: RootState) => {
   return years;
 };
 
-export const singleBookSelector = (state: RootState) => {
-  //TODO: Create single book selector
-}
+export const singleBookSelector = createSelector(
+  [selectBooks, selectBookId],
+  (bookList, bookId) => {
+    // console.log(bookId);
+    return bookList.find((arrayEl) => arrayEl['Book Id'] === bookId);
+  }
+);
 
 export default bookSlice.reducer;

@@ -14,36 +14,43 @@ import StarRatingInput from './StarRatingInput/StarRatingInput';
 const AddBook = () => {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [inputs, setInputs] = useState({
+    title: '',
+    firstName: '',
+    lastName: '',
+    'date-read': '',
+    pages: '',
+    isbn: '',
+  });
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const [isBookUploading, setIsBookUploading] = useState(false);
   const [rating, setRating] = useState(0);
+
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+
+  };
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    const target = event.target as typeof event.target & {
-      title: { value: string };
-      firstName: { value: string };
-      lastName: { value: string };
-      'date-read': { value: string };
-      pages: { value: string };
-      isbn: { value: string };
-    };
-    //TODO: replace properties with actual values from form
+   
     dispatch(
       addBook({
         'Book Id': Math.trunc(Math.random() * 10000000),
-        Title: target.title.value,
-        Author: target.firstName.value + ' ' + target.lastName.value,
+        Title: inputs.title,
+        Author: inputs.firstName + ' ' + inputs.lastName,
         'My Rating': rating,
-        ISBN13: parseInt(target.isbn.value),
-        'Date Read': target['date-read'].value,
-        'Author l-f': target.lastName.value + ', ' + target.firstName.value,
+        ISBN13: parseInt(inputs.isbn),
+        'Date Read': inputs['date-read'],
+        'Author l-f': inputs.lastName + ', ' + inputs.firstName,
       })
     );
 
     setIsBookUploading(true);
 
-    //***draft state to mimic the db async upload***
+    //***draft state to mock the db async upload***
 
     setTimeout(() => {
       setIsBookUploading(false);
@@ -52,10 +59,10 @@ const AddBook = () => {
   };
   const getBookCoverHandler = () => {
     setIsCoverLoading(true);
-    if (isbnRef.current) {
+    if (inputs.isbn) {
       axios
         .get(
-          `https://covers.openlibrary.org/b/isbn/${isbnRef.current['value']}-L.jpg?default=false`,
+          `https://covers.openlibrary.org/b/isbn/${inputs.isbn}-L.jpg?default=false`,
           {
             responseType: 'blob',
           }
@@ -93,11 +100,11 @@ const AddBook = () => {
           <div className="addBook-form__section addBook-form__section--title">
             <div className="addBook-form__group">
               <label htmlFor="title">Book Title</label>
-              <input id="title" name="title" type="text" />
+              <input id="title" name="title" type="text" onChange={handleChange} />
             </div>
             <div className="addBook-form__group addBook-form__group--isbn">
               <label htmlFor="isbn">ISBN code (for book cover)</label>
-              <input id="isbn" name="isbn" type="text" ref={isbnRef} />
+              <input id="isbn" name="isbn" type="text" ref={isbnRef} onChange={handleChange} />
               <Button
                 className="addBook-form__button"
                 onClick={getBookCoverHandler}
@@ -115,11 +122,11 @@ const AddBook = () => {
 
             <div className="addBook-form__group">
               <label htmlFor="firstName">First Name</label>
-              <input id="firstName" name="firstName" type="text" />
+              <input id="firstName" name="firstName" type="text" onChange={handleChange} />
             </div>
             <div className="addBook-form__group">
               <label htmlFor="lastName">Last Name</label>
-              <input id="lastName" name="lastName" type="text" />
+              <input id="lastName" name="lastName" type="text" onChange={handleChange}  />
             </div>
           </div>
           <div className="addBook-form__section addBook-form__section--review">
@@ -133,6 +140,7 @@ const AddBook = () => {
                 type="date"
                 id="date-read"
                 name="date-read"
+                onChange={handleChange} 
                 min="2010-01-01"
                 max="2030-12-31"
                 required
@@ -140,7 +148,12 @@ const AddBook = () => {
             </div>
             <div className="addBook-form__group">
               <label htmlFor="rating">My rating</label>
-              <StarRatingInput rating={rating} onStarClick={(index) => {setRating(index)}}/>
+              <StarRatingInput
+                rating={rating}
+                onStarClick={(index) => {
+                  setRating(index);
+                }}
+              />
             </div>
           </div>
 

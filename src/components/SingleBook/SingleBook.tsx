@@ -1,14 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { getBookById } from '../../data';
 import StarRating from '../Gallery/Sidebar/StarRating/StarRating';
 import { StyledSingleBook } from './SingleBook.styles';
 import { useParams } from 'react-router-dom';
 
-type QuizParams = {
-  id: string;
+
+import { useAppSelector } from '../../store/hooks';
+import {singleBookSelector} from '../../store/slices/bookSlice'
+
+type BooksParams = {
+  bookId: string;
 };
 
 type openLibraryBook = {
@@ -16,11 +19,13 @@ type openLibraryBook = {
 };
 
 const SingleBook = () => {
-  const { id } = useParams<QuizParams>();
+  let { bookId } = useParams<BooksParams>();
   const [bookInfo, setBookInfo] = useState<openLibraryBook>({});
   const [isBookInfoLoading, setIsBookInfoLoading] = useState<boolean>(true);
-  let bookIdNum = parseInt(id!);
-  const book = getBookById(bookIdNum);
+  let bookIdNum = parseInt(bookId!);
+  const book = useAppSelector((state) =>
+    singleBookSelector(state, bookIdNum)
+  );
 
   const url = 'https://openlibrary.org/isbn/';
 
