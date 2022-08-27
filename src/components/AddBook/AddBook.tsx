@@ -26,16 +26,15 @@ const AddBook = () => {
   const [isBookUploading, setIsBookUploading] = useState(false);
   const [rating, setRating] = useState(0);
 
-
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputs((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-   
     dispatch(
       addBook({
         'Book Id': Math.trunc(Math.random() * 10000000),
@@ -56,6 +55,19 @@ const AddBook = () => {
       setIsBookUploading(false);
       navigate('/');
     }, 1000);
+  };
+
+  const clearInputFieldsHandler = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    setInputs({
+      title: '',
+      firstName: '',
+      lastName: '',
+      'date-read': '',
+      pages: '',
+      isbn: '',
+    });
+    setRating(0);
   };
   const getBookCoverHandler = () => {
     setIsCoverLoading(true);
@@ -100,11 +112,24 @@ const AddBook = () => {
           <div className="addBook-form__section addBook-form__section--title">
             <div className="addBook-form__group">
               <label htmlFor="title">Book Title</label>
-              <input id="title" name="title" type="text" onChange={handleChange} />
+              <input
+                id="title"
+                name="title"
+                type="text"
+                onChange={handleChange}
+                value={inputs.title}
+              />
             </div>
             <div className="addBook-form__group addBook-form__group--isbn">
               <label htmlFor="isbn">ISBN code (for book cover)</label>
-              <input id="isbn" name="isbn" type="text" ref={isbnRef} onChange={handleChange} />
+              <input
+                id="isbn"
+                name="isbn"
+                type="text"
+                ref={isbnRef}
+                value={inputs.isbn}
+                onChange={handleChange}
+              />
               <Button
                 className="addBook-form__button"
                 onClick={getBookCoverHandler}
@@ -122,11 +147,23 @@ const AddBook = () => {
 
             <div className="addBook-form__group">
               <label htmlFor="firstName">First Name</label>
-              <input id="firstName" name="firstName" type="text" onChange={handleChange} />
+              <input
+                id="firstName"
+                name="firstName"
+                type="text"
+                onChange={handleChange}
+                value={inputs.firstName}
+              />
             </div>
             <div className="addBook-form__group">
               <label htmlFor="lastName">Last Name</label>
-              <input id="lastName" name="lastName" type="text" onChange={handleChange}  />
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                onChange={handleChange}
+                value={inputs.lastName}
+              />
             </div>
           </div>
           <div className="addBook-form__section addBook-form__section--review">
@@ -140,7 +177,8 @@ const AddBook = () => {
                 type="date"
                 id="date-read"
                 name="date-read"
-                onChange={handleChange} 
+                onChange={handleChange}
+                value={inputs['date-read']}
                 min="2010-01-01"
                 max="2030-12-31"
                 required
@@ -150,6 +188,7 @@ const AddBook = () => {
               <label htmlFor="rating">My rating</label>
               <StarRatingInput
                 rating={rating}
+                key={rating}
                 onStarClick={(index) => {
                   setRating(index);
                 }}
@@ -167,7 +206,7 @@ const AddBook = () => {
           <Button
             className="addBook-form__button"
             outlined={true}
-            onClick={getBookCoverHandler}
+            onClick={clearInputFieldsHandler}
           >
             Clear
           </Button>

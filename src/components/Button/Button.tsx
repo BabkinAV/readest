@@ -21,7 +21,7 @@ const Button = ({
   return (
     <StyledButton
       onClick={onClick}
-      className={`${className} ${outlined && 'outlined'} ${loading && 'loading' } `}
+      className={`${className} ${outlined ? 'outlined' : ''} ${loading ? 'loading' : '' } `}
     >
       {loading && <Spinner color="white" />} {children}
     </StyledButton>
