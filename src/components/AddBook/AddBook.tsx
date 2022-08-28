@@ -10,10 +10,12 @@ import { StyledAddBook } from './AddBook.styles';
 import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
 import StarRatingInput from './StarRatingInput/StarRatingInput';
+import { useInput } from '../../helpers/hooks/useInput';
 
 const AddBook = () => {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [titleError, setTitleError] = useState(false);
   const [inputs, setInputs] = useState({
     title: '',
     firstName: '',
@@ -26,12 +28,24 @@ const AddBook = () => {
   const [isBookUploading, setIsBookUploading] = useState(false);
   const [rating, setRating] = useState(0);
 
+  
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
+  const isNotEmpty = (value:string) => value.trim() !== '';
+
+  //TODO: connect state from custom hook to input fields, make validation (see https://github.com/academind/react-complete-guide-code/tree/16-working-with-forms/code/11-applying-our-hook-and-knowledge)
+  const {value: titleValue, valueChangeHandler: titleChangeHandler} = useInput('')
+
+
+
+  
+
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
@@ -110,8 +124,8 @@ const AddBook = () => {
           </div>
 
           <div className="addBook-form__section addBook-form__section--title">
-            <div className="addBook-form__group">
-              <label htmlFor="title">Book Title</label>
+            <div className="addBook-form__group addBook-form__group addBook-form__group hasError">
+              <label htmlFor="title">Book Title*</label>
               <input
                 id="title"
                 name="title"
@@ -119,8 +133,9 @@ const AddBook = () => {
                 onChange={handleChange}
                 value={inputs.title}
               />
+              <span className='error'>Title must not be empty</span>
             </div>
-            <div className="addBook-form__group addBook-form__group--isbn">
+            <div className="addBook-form__group addBook-form__group--isbn hasError">
               <label htmlFor="isbn">ISBN code (for book cover)</label>
               <input
                 id="isbn"
@@ -130,6 +145,7 @@ const AddBook = () => {
                 value={inputs.isbn}
                 onChange={handleChange}
               />
+              <span className='error'>Invalid ISBN code</span>
               <Button
                 className="addBook-form__button"
                 onClick={getBookCoverHandler}
@@ -155,8 +171,8 @@ const AddBook = () => {
                 value={inputs.firstName}
               />
             </div>
-            <div className="addBook-form__group">
-              <label htmlFor="lastName">Last Name</label>
+            <div className="addBook-form__group hasError">
+              <label htmlFor="lastName">Last Name*</label>
               <input
                 id="lastName"
                 name="lastName"
@@ -164,6 +180,7 @@ const AddBook = () => {
                 onChange={handleChange}
                 value={inputs.lastName}
               />
+              <span className='error'>Last name must not be empty</span>
             </div>
           </div>
           <div className="addBook-form__section addBook-form__section--review">
@@ -171,8 +188,8 @@ const AddBook = () => {
               <h3>Add Review information</h3>
             </div>
 
-            <div className="addBook-form__group">
-              <label htmlFor="date-read">Date Read</label>
+            <div className="addBook-form__group hasError">
+              <label htmlFor="date-read">Date Read*</label>
               <input
                 type="date"
                 id="date-read"
@@ -181,8 +198,8 @@ const AddBook = () => {
                 value={inputs['date-read']}
                 min="2010-01-01"
                 max="2030-12-31"
-                required
               />
+              <span className='error'>Read date is required</span>
             </div>
             <div className="addBook-form__group">
               <label htmlFor="rating">My rating</label>
@@ -195,6 +212,8 @@ const AddBook = () => {
               />
             </div>
           </div>
+
+          <p className='addBook-form__info'>*Required fields</p>
 
           <Button
             className="addBook-form__button addBook-form__button--save"

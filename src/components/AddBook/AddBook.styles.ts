@@ -43,9 +43,13 @@ export const StyledAddBook = styled.div`
         display: grid;
         grid-template-columns: 1fr 1fr;
         margin-bottom: 30px;
+        &--review {
+          margin-bottom: 40px;
+        }
       }
 
       &__group {
+        position: relative;
         label {
           font-family: ${(props) => props.theme.fonts.primary};
           font-size: 15px;
@@ -77,9 +81,37 @@ export const StyledAddBook = styled.div`
 
         &--isbn {
           input {
-            margin-bottom: 20px;
+            margin-bottom: 40px;
           }
         }
+
+        &.hasError {
+          label {
+            color: #ff0000;
+          }
+          input {
+            border: 1px solid #ff0000
+          }
+        }
+
+        span.error {
+          position: absolute;
+          left: 0;
+          top: 75px;
+          border: 10px;
+          color: #ff0000;
+          font-size: 14px;
+          font-family: ${(props) => props.theme.fonts.primary};
+          
+        }
+
+      }
+      &__info {
+        padding-bottom: 10px;
+        font-family: ${(props) => props.theme.fonts.primary};
+        font-size: 14px;
+        font-weight: 400;
+
       }
       &__button {
         &--save {

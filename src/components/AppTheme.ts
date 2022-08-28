@@ -1,4 +1,6 @@
-const theme = {
+import { DefaultTheme } from "styled-components";
+
+const theme: DefaultTheme = {
   fonts: {
     primary: "'Source Sans Pro', sans-serif",
     secondary: "'Nunito Sans', sans-serif",

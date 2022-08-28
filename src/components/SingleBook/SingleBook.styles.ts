@@ -23,7 +23,12 @@ export const StyledSingleBook = styled.div`
     }
     &__author {
       font-family: ${(props) => props.theme.fonts.primary};
+      font-weight: 600;
       margin-bottom: 30px;
+
+      span {
+        
+      }
       &--gold {
         color: ${(props) => props.theme.colors.gold};
         font-size: 18px;
