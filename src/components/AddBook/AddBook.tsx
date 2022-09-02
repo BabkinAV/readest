@@ -15,36 +15,48 @@ import { useInput } from '../../helpers/hooks/useInput';
 const AddBook = () => {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [titleError, setTitleError] = useState(false);
-  const [inputs, setInputs] = useState({
-    title: '',
-    firstName: '',
-    lastName: '',
-    'date-read': '',
-    pages: '',
-    isbn: '',
-  });
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const [isBookUploading, setIsBookUploading] = useState(false);
   const [rating, setRating] = useState(0);
 
-  
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+
+  const isNotEmpty = (value: string) => value.trim() !== '';
+  const isISBN = (value: string) => {
+    return value.trim() === '' || /\b\d{13}\b/.test(value);
   };
 
-  const isNotEmpty = (value:string) => value.trim() !== '';
+  const {
+    value: titleValue,
+    valueChangeHandler: titleChangeHandler,
+    hasError: titleHasError,
+    inputBlurHandler: titleBlurHandler,
+    reset: titleReset
+  } = useInput('', isNotEmpty);
 
-  //TODO: connect state from custom hook to input fields, make validation (see https://github.com/academind/react-complete-guide-code/tree/16-working-with-forms/code/11-applying-our-hook-and-knowledge)
-  const {value: titleValue, valueChangeHandler: titleChangeHandler} = useInput('')
+  const {
+    value: isbnValue,
+    valueChangeHandler: isbnChangeHandler,
+    hasError: isbnHasError,
+    inputBlurHandler: isbnBlurHandler,
+    reset: isbnReset
+  } = useInput('', isISBN);
 
+  const { value: firstNameValue, valueChangeHandler: firstNameChangeHandler, reset: firstNameReset } = useInput('', () => true);
 
-
-  
+  const {
+    value: lastNameValue,
+    valueChangeHandler: lastNameChangeHandler,
+    hasError: lastNameHasError,
+    inputBlurHandler: lastNameBlurHandler,
+    reset: lastNameReset
+  } = useInput('', isNotEmpty);
+  const {
+    value: dateReadValue,
+    valueChangeHandler: dateReadChangeHandler,
+    hasError: dateReadHasError,
+    inputBlurHandler: dateReadBlurHandler,
+    reset: dateReadReset
+  } = useInput('', isNotEmpty);
 
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -52,12 +64,12 @@ const AddBook = () => {
     dispatch(
       addBook({
         'Book Id': Math.trunc(Math.random() * 10000000),
-        Title: inputs.title,
-        Author: inputs.firstName + ' ' + inputs.lastName,
+        Title: titleValue,
+        Author: firstNameValue + ' ' + lastNameValue,
         'My Rating': rating,
-        ISBN13: parseInt(inputs.isbn),
-        'Date Read': inputs['date-read'],
-        'Author l-f': inputs.lastName + ', ' + inputs.firstName,
+        ISBN13: parseInt(isbnValue),
+        'Date Read': dateReadValue,
+        'Author l-f': lastNameValue + ', ' + firstNameValue,
       })
     );
 
@@ -72,23 +84,21 @@ const AddBook = () => {
   };
 
   const clearInputFieldsHandler = (event: React.SyntheticEvent) => {
+    //TODO: prevent inputs validation on clear
     event.preventDefault();
-    setInputs({
-      title: '',
-      firstName: '',
-      lastName: '',
-      'date-read': '',
-      pages: '',
-      isbn: '',
-    });
+    titleReset();
+    isbnReset();
+    firstNameReset();
+    lastNameReset();
+    dateReadReset()
     setRating(0);
   };
   const getBookCoverHandler = () => {
     setIsCoverLoading(true);
-    if (inputs.isbn) {
+    if (isbnValue) {
       axios
         .get(
-          `https://covers.openlibrary.org/b/isbn/${inputs.isbn}-L.jpg?default=false`,
+          `https://covers.openlibrary.org/b/isbn/${isbnValue}-L.jpg?default=false`,
           {
             responseType: 'blob',
           }
@@ -124,28 +134,40 @@ const AddBook = () => {
           </div>
 
           <div className="addBook-form__section addBook-form__section--title">
-            <div className="addBook-form__group addBook-form__group addBook-form__group hasError">
+            <div
+              className={`addBook-form__group addBook-form__group addBook-form__group ${
+                titleHasError && 'hasError'
+              }`}
+            >
               <label htmlFor="title">Book Title*</label>
               <input
                 id="title"
                 name="title"
                 type="text"
-                onChange={handleChange}
-                value={inputs.title}
+                onBlur={titleBlurHandler}
+                onChange={titleChangeHandler}
+                value={titleValue}
               />
-              <span className='error'>Title must not be empty</span>
+              {titleHasError && (
+                <span className="error">Title must not be empty</span>
+              )}
             </div>
-            <div className="addBook-form__group addBook-form__group--isbn hasError">
+            <div
+              className={`addBook-form__group addBook-form__group--isbn ${
+                isbnHasError && 'hasError'
+              }`}
+            >
               <label htmlFor="isbn">ISBN code (for book cover)</label>
               <input
                 id="isbn"
                 name="isbn"
                 type="text"
+                onBlur={isbnBlurHandler}
                 ref={isbnRef}
-                value={inputs.isbn}
-                onChange={handleChange}
+                value={isbnValue}
+                onChange={isbnChangeHandler}
               />
-              <span className='error'>Invalid ISBN code</span>
+              {isbnHasError && <span className="error">Invalid ISBN code</span>}
               <Button
                 className="addBook-form__button"
                 onClick={getBookCoverHandler}
@@ -167,20 +189,27 @@ const AddBook = () => {
                 id="firstName"
                 name="firstName"
                 type="text"
-                onChange={handleChange}
-                value={inputs.firstName}
+                onChange={firstNameChangeHandler}
+                value={firstNameValue}
               />
             </div>
-            <div className="addBook-form__group hasError">
+            <div
+              className={`addBook-form__group ${
+                lastNameHasError && 'hasError'
+              } `}
+            >
               <label htmlFor="lastName">Last Name*</label>
               <input
                 id="lastName"
                 name="lastName"
                 type="text"
-                onChange={handleChange}
-                value={inputs.lastName}
+                onBlur={lastNameBlurHandler}
+                onChange={lastNameChangeHandler}
+                value={lastNameValue}
               />
-              <span className='error'>Last name must not be empty</span>
+              {lastNameHasError && (
+                <span className="error">Last name must not be empty</span>
+              )}
             </div>
           </div>
           <div className="addBook-form__section addBook-form__section--review">
@@ -188,18 +217,25 @@ const AddBook = () => {
               <h3>Add Review information</h3>
             </div>
 
-            <div className="addBook-form__group hasError">
+            <div
+              className={`addBook-form__group ${
+                dateReadHasError && 'hasError'
+              }`}
+            >
               <label htmlFor="date-read">Date Read*</label>
               <input
                 type="date"
                 id="date-read"
                 name="date-read"
-                onChange={handleChange}
-                value={inputs['date-read']}
+                onBlur={dateReadBlurHandler}
+                onChange={dateReadChangeHandler}
+                value={dateReadValue}
                 min="2010-01-01"
                 max="2030-12-31"
               />
-              <span className='error'>Read date is required</span>
+              {dateReadHasError && (
+                <span className="error">Read date is required</span>
+              )}
             </div>
             <div className="addBook-form__group">
               <label htmlFor="rating">My rating</label>
@@ -213,7 +249,7 @@ const AddBook = () => {
             </div>
           </div>
 
-          <p className='addBook-form__info'>*Required fields</p>
+          <p className="addBook-form__info">*Required fields</p>
 
           <Button
             className="addBook-form__button addBook-form__button--save"
