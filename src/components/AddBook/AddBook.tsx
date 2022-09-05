@@ -22,11 +22,12 @@ const AddBook = () => {
 
   const isNotEmpty = (value: string) => value.trim() !== '';
   const isISBN = (value: string) => {
-    return value.trim() === '' || /\b\d{13}\b/.test(value);
+    return /\b\d{13}\b/.test(value);
   };
 
   const {
     value: titleValue,
+    isValid: titleIsValid,
     valueChangeHandler: titleChangeHandler,
     hasError: titleHasError,
     inputBlurHandler: titleBlurHandler,
@@ -45,21 +46,34 @@ const AddBook = () => {
 
   const {
     value: lastNameValue,
+    isValid: lastNameIsValid,
     valueChangeHandler: lastNameChangeHandler,
     hasError: lastNameHasError,
     inputBlurHandler: lastNameBlurHandler,
     reset: lastNameReset
   } = useInput('', isNotEmpty);
+
   const {
     value: dateReadValue,
+    isValid: dateReadIsValid,
     valueChangeHandler: dateReadChangeHandler,
     hasError: dateReadHasError,
     inputBlurHandler: dateReadBlurHandler,
     reset: dateReadReset
   } = useInput('', isNotEmpty);
 
+  let formIsValid = titleIsValid && lastNameIsValid && dateReadIsValid;
+
   const addBookFormSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
+    if (!formIsValid) {
+      titleBlurHandler();
+      lastNameBlurHandler();
+      isbnBlurHandler();
+      dateReadBlurHandler();
+      return;
+    }
 
     dispatch(
       addBook({
@@ -84,7 +98,6 @@ const AddBook = () => {
   };
 
   const clearInputFieldsHandler = (event: React.SyntheticEvent) => {
-    //TODO: prevent inputs validation on clear
     event.preventDefault();
     titleReset();
     isbnReset();
@@ -93,7 +106,8 @@ const AddBook = () => {
     dateReadReset()
     setRating(0);
   };
-  const getBookCoverHandler = () => {
+  const getBookCoverHandler = (event: React.SyntheticEvent) => {
+    event.preventDefault();
     setIsCoverLoading(true);
     if (isbnValue) {
       axios
@@ -112,7 +126,9 @@ const AddBook = () => {
           setIsCoverLoading(false);
         });
     } else {
-      //TODO: Error handling for improper or absent isbn code
+      setIsCoverLoading(false);
+      isbnBlurHandler();
+      return;
     }
   };
 
