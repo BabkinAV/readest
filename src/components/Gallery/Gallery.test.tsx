@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import Gallery from './Gallery';
 
 describe('sorting and filters functionality for gallery', () => {
-  test('sorting functionality', () => {
+  test('sorting functionality', async () => {
     render(<Gallery />);
     const sortSelect = screen.getByRole('combobox');
     const titleOption = screen.getByRole('option', {
@@ -11,7 +11,7 @@ describe('sorting and filters functionality for gallery', () => {
     }) as HTMLOptionElement;
     userEvent.selectOptions(sortSelect, titleOption);
     expect(titleOption.selected).toBe(true);
-    let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
+    let galleryItems = await screen.findAllByAltText(/cover$/) as HTMLImageElement[];
 
     expect(galleryItems[0].alt).toContain('City of Stairs');
     //ensuring array is sorted
@@ -36,11 +36,11 @@ describe('sorting and filters functionality for gallery', () => {
     
   });
 
-  test('author filtering functionality', () => {
+  test('author filtering functionality', async () => {
     render(<Gallery />);
 
     //click one item filter item
-    let authorFilterItem = screen.getByText('Abercrombie, Joe');
+    let authorFilterItem =  await screen.findByText('Abercrombie, Joe');
     userEvent.click(authorFilterItem);
 
     let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
@@ -109,11 +109,11 @@ describe('sorting and filters functionality for gallery', () => {
     expect(appliedFilterHeader).not.toBeInTheDocument();
   });
 
-  test('rating filtering functionality', () => {
+  test('rating filtering functionality', async () => {
     render(<Gallery />);
 
     //click one item filter item
-    let ratingItem = screen.getAllByTestId('star-rating');
+    let ratingItem = await screen.findAllByTestId('star-rating');
 
     userEvent.click(ratingItem[1]);
 
@@ -157,11 +157,11 @@ describe('sorting and filters functionality for gallery', () => {
     expect(appliedFilterHeader).not.toBeInTheDocument();
   });
 
-  test('year filtering functionality', () => {
+  test('year filtering functionality', async () => {
     render(<Gallery />);
 
     //click one item filter item
-    let yearFilterItem = screen.getByText(/^2021/);
+    let yearFilterItem = await screen.findByText(/^2021/);
     userEvent.click(yearFilterItem);
 
     let galleryItems = screen.getAllByAltText(/cover$/) as HTMLImageElement[];
@@ -204,13 +204,13 @@ describe('sorting and filters functionality for gallery', () => {
 
   
 
-  test('filters combination test', () => {
+  test('filters combination test', async () => {
     //check filtering of  4* books read in 2020
 
     render(<Gallery />);
 
     //click one item filter item
-    let yearFilterItem = screen.getByText(/^2020/);
+    let yearFilterItem = await screen.findByText(/^2020/);
     userEvent.click(yearFilterItem);
 
     
@@ -229,12 +229,12 @@ describe('sorting and filters functionality for gallery', () => {
   });
 
 
-  test('checking double filter click', () => {
+  test('checking double filter click', async () => {
     render(<Gallery />);
     // eslint-disable-next-line testing-library/no-debugging-utils
 
     //click one item filter item
-    let yearFilterItem = screen.getByText(/^2021/);
+    let yearFilterItem = await screen.findByText(/^2021/);
     userEvent.click(yearFilterItem);
     userEvent.click(yearFilterItem);
 

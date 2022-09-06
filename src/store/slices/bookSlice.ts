@@ -17,7 +17,7 @@ interface BookState {
 }
 
 const initialState: BookState = {
-  booksArray: data,
+  booksArray: [],
   appliedFilters: [],
   sorting: 'Book Id',
 };
@@ -26,6 +26,9 @@ export const bookSlice = createSlice({
   name: 'bookData',
   initialState,
   reducers: {
+    setBooks: (state, action:PayloadAction<Book[]>) => {
+      state.booksArray = action.payload;
+    },
     addBook: (state, action: PayloadAction<Book>) => {
       state.booksArray.push(action.payload);
     },
@@ -64,7 +67,7 @@ export const selectBooks = (state: RootState) => state.books.booksArray;
 
 const selectBookId = (state: RootState, bookId: number) => bookId;
 
-export const { sortData, addFilter, removeFilter, addBook } = bookSlice.actions;
+export const { sortData, addFilter, removeFilter, addBook, setBooks } = bookSlice.actions;
 
 export const bookFiltersSelector = (state: RootState) =>
   state.books.appliedFilters;
@@ -136,5 +139,6 @@ export const singleBookSelector = createSelector(
     return bookList.find((arrayEl) => arrayEl['Book Id'] === bookId);
   }
 );
+
 
 export default bookSlice.reducer;

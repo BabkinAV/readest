@@ -1,6 +1,8 @@
-import React, { FC} from 'react';
+import React, { FC, useEffect} from 'react';
 
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+
+import { fetchBooks } from '../../store/actions/bookActions';
 
 import { sortedFilteredBooksArraySelector } from '../../store/slices/bookSlice';
 
@@ -12,6 +14,12 @@ const Gallery: FC = () => {
   
   
   const sortedFilteredBooks = useAppSelector(sortedFilteredBooksArraySelector);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBooks())
+  }, [dispatch])
 
 
   return (
