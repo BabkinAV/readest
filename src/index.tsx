@@ -11,18 +11,6 @@ import { Provider } from 'react-redux';
 import App from './App';
 import './index.css';
 
-if (process.env.NODE_ENV === 'development') {
-
-  const { worker } = require('./mocks/browser')
-
-  worker.start({
-
-    onUnhandledRequest: 'bypass',
-  
-  })
-
-}
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

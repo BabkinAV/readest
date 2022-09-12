@@ -5,11 +5,11 @@ import { Book } from '../../data.model';
 
 import { setBooks } from '../slices/bookSlice';
 
-const uri = 'https://backend.dev';
+const uri = 'https://gray-doubtful-cod.cyclic.app/';
 
 export const fetchBooks = () => (dispatch: AppDispatch) => {
   axios
-    .get<Book[]>(`${uri}/getBooks`)
+    .get<Book[]>(`${uri}/books`)
     .then((res) => {
       dispatch(setBooks(res.data));
     })
