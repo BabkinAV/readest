@@ -19,7 +19,6 @@ const AddBook = () => {
   const [isBookUploading, setIsBookUploading] = useState(false);
   const [rating, setRating] = useState(0);
 
-
   const isNotEmpty = (value: string) => value.trim() !== '';
   const isISBN = (value: string) => {
     return /\b\d{13}\b/.test(value);
@@ -31,7 +30,7 @@ const AddBook = () => {
     valueChangeHandler: titleChangeHandler,
     hasError: titleHasError,
     inputBlurHandler: titleBlurHandler,
-    reset: titleReset
+    reset: titleReset,
   } = useInput('', isNotEmpty);
 
   const {
@@ -39,10 +38,14 @@ const AddBook = () => {
     valueChangeHandler: isbnChangeHandler,
     hasError: isbnHasError,
     inputBlurHandler: isbnBlurHandler,
-    reset: isbnReset
+    reset: isbnReset,
   } = useInput('', isISBN);
 
-  const { value: firstNameValue, valueChangeHandler: firstNameChangeHandler, reset: firstNameReset } = useInput('', () => true);
+  const {
+    value: firstNameValue,
+    valueChangeHandler: firstNameChangeHandler,
+    reset: firstNameReset,
+  } = useInput('', () => true);
 
   const {
     value: lastNameValue,
@@ -50,7 +53,7 @@ const AddBook = () => {
     valueChangeHandler: lastNameChangeHandler,
     hasError: lastNameHasError,
     inputBlurHandler: lastNameBlurHandler,
-    reset: lastNameReset
+    reset: lastNameReset,
   } = useInput('', isNotEmpty);
 
   const {
@@ -59,7 +62,7 @@ const AddBook = () => {
     valueChangeHandler: dateReadChangeHandler,
     hasError: dateReadHasError,
     inputBlurHandler: dateReadBlurHandler,
-    reset: dateReadReset
+    reset: dateReadReset,
   } = useInput('', isNotEmpty);
 
   let formIsValid = titleIsValid && lastNameIsValid && dateReadIsValid;
@@ -103,7 +106,7 @@ const AddBook = () => {
     isbnReset();
     firstNameReset();
     lastNameReset();
-    dateReadReset()
+    dateReadReset();
     setRating(0);
   };
   const getBookCoverHandler = (event: React.SyntheticEvent) => {
@@ -139,7 +142,7 @@ const AddBook = () => {
     <StyledAddBook>
       <div className="addBook">
         <div className="addBook__image">
-          <img src={isbn} alt="empty cover" />
+          <img src={isbn} alt={isbn ? 'Book cover' : 'Empty Cover'} />
         </div>
         <form
           className="addBook__form addBook-form"

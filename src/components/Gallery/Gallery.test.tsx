@@ -227,6 +227,7 @@ describe('sorting and filters functionality for gallery', () => {
     expect(galleryItems).toHaveLength(5);
 
   });
+	
 
 
   test('checking double filter click', async () => {
