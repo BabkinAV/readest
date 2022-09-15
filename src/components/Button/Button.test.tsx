@@ -1,9 +1,8 @@
-import { render, screen, within } from '../../test-utils/testing-utils';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '../../test-utils/testing-utils';
 import Button from './Button'
 
-describe('Add book functionality', () => {
-  test('add book route working',  () => {
+describe('Button functionality', () => {
+  test('spinner appears on loading prop',  () => {
 		const {rerender} = render(<Button children='Get book cover'/>);
 		const renderedButton = screen.getByRole('button', {name: 'Get book cover'});
 		expect(renderedButton).toBeInTheDocument();
@@ -11,15 +10,5 @@ describe('Add book functionality', () => {
 		rerender(<Button children='Get book cover' loading/>)
 		const spinner = screen.getByTestId('spinner');
 		expect(spinner).toBeInTheDocument();
-		
 	});
-
-
-
-
-
-
-
-
-
 });

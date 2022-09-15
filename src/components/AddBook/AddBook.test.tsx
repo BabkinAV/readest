@@ -1,4 +1,4 @@
-import { render, screen, within } from '../../test-utils/testing-utils';
+import { fireEvent, render, screen, within } from '../../test-utils/testing-utils';
 import userEvent from '@testing-library/user-event';
 import App from '../../App';
 
@@ -29,8 +29,10 @@ describe('Add book functionality', () => {
 		const getCoverBtn = screen.getByRole('button', { name: 'Get book cover'
 		});
 		expect(getCoverBtn).toBeInTheDocument();
-		
-
+		fireEvent.focus(isbnInput);
+		fireEvent.blur(isbnInput);
+		const isbnWrapper = screen.getByTestId('isbn-wrapper');
+		expect(isbnWrapper).toHaveClass('hasError');
 	})
 
 

@@ -175,6 +175,7 @@ const AddBook = () => {
               className={`addBook-form__group addBook-form__group--isbn ${
                 isbnHasError && 'hasError'
               }`}
+              data-testid="isbn-wrapper"
             >
               <label htmlFor="isbn">ISBN code (for book cover)</label>
               <input
