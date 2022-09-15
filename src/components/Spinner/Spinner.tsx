@@ -8,7 +8,7 @@ interface Props {
 
 const Spinner = ({color}: Props) => {
   return (
-    <StyledSpinner className='spinner' color={color}>
+    <StyledSpinner data-testid="spinner" className='spinner' color={color}>
          <FontAwesomeIcon icon={['fas', 'spinner']} />
     </StyledSpinner>
   );
