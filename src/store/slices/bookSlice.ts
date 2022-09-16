@@ -6,7 +6,6 @@ import { createArrayOfUniqueValues } from '../../helpers/dataArrayHandler';
 
 import { Book } from '../../data.model';
 
-import data from '../../data';
 import { SortType, AppliedFilter } from '../../data.model';
 import filterBooksArray from '../helpers/filterBooksArray';
 
@@ -14,12 +13,14 @@ interface BookState {
   booksArray: Book[];
   appliedFilters: AppliedFilter[];
   sorting: SortType;
+	dataObtained: boolean;
 }
 
 const initialState: BookState = {
   booksArray: [],
   appliedFilters: [],
   sorting: 'Book Id',
+	dataObtained: false,
 };
 
 export const bookSlice = createSlice({
@@ -29,6 +30,9 @@ export const bookSlice = createSlice({
     setBooks: (state, action:PayloadAction<Book[]>) => {
       state.booksArray = action.payload;
     },
+		setDataObtained: (state) => {
+			state.dataObtained = true;
+		},
     addBook: (state, action: PayloadAction<Book>) => {
       state.booksArray.push(action.payload);
     },
@@ -67,7 +71,7 @@ export const selectBooks = (state: RootState) => state.books.booksArray;
 
 const selectBookId = (state: RootState, bookId: number) => bookId;
 
-export const { sortData, addFilter, removeFilter, addBook, setBooks } = bookSlice.actions;
+export const { sortData, setDataObtained, addFilter, removeFilter, addBook, setBooks } = bookSlice.actions;
 
 export const bookFiltersSelector = (state: RootState) =>
   state.books.appliedFilters;

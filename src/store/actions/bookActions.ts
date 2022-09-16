@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AppDispatch } from '../store';
 import { Book } from '../../data.model';
 
-import { setBooks } from '../slices/bookSlice';
+import { setBooks, setDataObtained } from '../slices/bookSlice';
 
 
 export const fetchBooks = () => (dispatch: AppDispatch) => {
@@ -11,6 +11,7 @@ export const fetchBooks = () => (dispatch: AppDispatch) => {
     .get<Book[]>(`https://gray-doubtful-cod.cyclic.app/books`)
     .then((res) => {
       dispatch(setBooks(res.data));
+			dispatch(setDataObtained());
     })
     .catch((error: string) => {
       console.log(error);

@@ -15,11 +15,20 @@ const Gallery: FC = () => {
   
   const sortedFilteredBooks = useAppSelector(sortedFilteredBooksArraySelector);
 
+	//workaround to prevent fetchBooks after addBook action
+
+	const isDataObtaned = useAppSelector((state) => state.books.dataObtained);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchBooks())
-  }, [dispatch])
+
+		if (!isDataObtaned) {
+			dispatch(fetchBooks())
+
+		}
+
+  }, [dispatch, isDataObtaned])
 
 
   return (

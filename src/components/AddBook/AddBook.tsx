@@ -142,7 +142,10 @@ const AddBook = () => {
     <StyledAddBook>
       <div className="addBook">
         <div className="addBook__image">
-          <img src={isbn} alt={isbn ? 'Book cover' : 'Empty Cover'} />
+          <img
+            src={isbn}
+            alt={isbn === emptyCover ? 'Empty Cover' : 'Book cover'}
+          />
         </div>
         <form
           className="addBook__form addBook-form"
@@ -157,6 +160,7 @@ const AddBook = () => {
               className={`addBook-form__group addBook-form__group addBook-form__group ${
                 titleHasError && 'hasError'
               }`}
+              data-testid="title-wrapper"
             >
               <label htmlFor="title">Book Title*</label>
               <input
@@ -217,6 +221,7 @@ const AddBook = () => {
               className={`addBook-form__group ${
                 lastNameHasError && 'hasError'
               } `}
+              data-testid="lastName-wrapper"
             >
               <label htmlFor="lastName">Last Name*</label>
               <input
@@ -240,7 +245,7 @@ const AddBook = () => {
             <div
               className={`addBook-form__group ${
                 dateReadHasError && 'hasError'
-              }`}
+              }`} data-testid="date-wrapper"
             >
               <label htmlFor="date-read">Date Read*</label>
               <input
