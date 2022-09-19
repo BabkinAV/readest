@@ -13,6 +13,7 @@ const StarRatingInput:React.FC<{rating: number, onStarClick: (rating:number) => 
           <button
             type="button"
             key={index}
+						aria-label='score'
             onClick={() => onStarClick(index)}
             onMouseEnter={() => setHover(index)}
             onMouseLeave={() => setHover(rating)}

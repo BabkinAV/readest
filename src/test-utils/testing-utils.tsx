@@ -8,7 +8,7 @@ import type { AppStore, RootState } from '../store/store';
 
 
 import { ThemeProvider } from 'styled-components';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import {setupStore } from '../store/store';
 import theme from '../components/AppTheme';
@@ -35,7 +35,7 @@ function renderWithProviders(
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-         <BrowserRouter>{children}</BrowserRouter>
+         <MemoryRouter>{children}</MemoryRouter>
         </ThemeProvider>
       </Provider>
     );

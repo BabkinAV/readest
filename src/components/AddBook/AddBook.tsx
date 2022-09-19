@@ -251,7 +251,7 @@ const AddBook = () => {
               <input
                 type="date"
                 id="date-read"
-                name="date-read"
+								data-testid="input-date"
                 onBlur={dateReadBlurHandler}
                 onChange={dateReadChangeHandler}
                 value={dateReadValue}
