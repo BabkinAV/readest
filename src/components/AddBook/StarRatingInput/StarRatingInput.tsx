@@ -19,9 +19,9 @@ const StarRatingInput:React.FC<{rating: number, onStarClick: (rating:number) => 
             onMouseLeave={() => setHover(rating)}
           >
             {index <= ((hover) || rating) ? (
-              <FontAwesomeIcon icon={['fas', 'star']} />
+              <FontAwesomeIcon icon={['fas', 'star']} data-testid="star-filled"/>
             ) : (
-              <FontAwesomeIcon icon={['far', 'star']} />
+              <FontAwesomeIcon icon={['far', 'star']} data-testid="star-empty"/>
             )}
           </button>
         );
