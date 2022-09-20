@@ -1,5 +1,4 @@
 import {
-  findAllByAltText,
   fireEvent,
   render,
   screen,
@@ -87,7 +86,6 @@ describe('Add book functionality', () => {
   });
 
   test('adding book test', async () => {
-    // renderForm();
     render(<App />);
 		const galleryItems = await screen.findAllByAltText(
       /cover$/i,
@@ -126,7 +124,6 @@ describe('Add book functionality', () => {
 
     userEvent.click(saveButton);
 
-    // screen.debug();
     const galleryHeader = await screen.findByRole(
       'heading',
       {
@@ -144,6 +141,14 @@ describe('Add book functionality', () => {
     );
 
     expect(galleryPics).toHaveLength(14);
-    // });
+
+		const newImg = screen.getByAltText(/Treasure cover/i);
+		expect(newImg).toBeInTheDocument();
+		const newTitle = screen.getByText(/treasure/i);
+		expect(newTitle).toBeInTheDocument()
+		const newAuthor = screen.getByText(/Clive Cussler/i);
+		expect(newAuthor).toBeInTheDocument()
+		const newDate = screen.getByText(/.+25\.02\.2022$/i);
+		expect(newDate).toBeInTheDocument()
   });
 });
