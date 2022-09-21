@@ -5,6 +5,7 @@ import TopNavigation from './components/layout/TopNavigation/TopNavigation';
 import { Container } from './App.styles';
 import Gallery from './components/Gallery/Gallery';
 import AddBook from './components/AddBook/AddBook';
+import SearchBook from './components/SearchBook/SearchBook';
 import SingleBook from './components/SingleBook/SingleBook';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Gallery />} />
             <Route path="/add" element={<AddBook />} />
+            <Route path="/search" element={<SearchBook />} />
             <Route path="/book/:bookId" element={<SingleBook />} />
           </Routes>
         </Container>
