@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper } from './SearchBook.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Select from '../Select/Select';
 
 const SearchBook = () => {
   return (
@@ -12,7 +13,11 @@ const SearchBook = () => {
         <form action="#" className="search-form">
           <div className="search-form__content">
             <div className="search-form__input-wrapper">
-              <input type="text" className="search-form__input" />
+              <input
+                type="text"
+                className="search-form__input"
+                placeholder="Enter text"
+              />
               <button className="search-form__button" type="submit">
                 <FontAwesomeIcon
                   icon={['fas', 'magnifying-glass']}
@@ -21,18 +26,16 @@ const SearchBook = () => {
               </button>
             </div>
             <div className="search-form__select-wrapper">
-              <select name="search-form__dropdown" id="search-select">
+              <Select>
                 <option value="">--Please choose search type--</option>
                 <option value="Title">By Title</option>
                 <option value="Author">By Author</option>
-              </select>
+              </Select>
             </div>
           </div>
         </form>
       </div>
-			<div className="search__results">
-				Search results will go here...
-			</div>
+      <div className="search__results">Search results will go here...</div>
     </Wrapper>
   );
 };
