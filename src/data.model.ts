@@ -1,4 +1,4 @@
-export type Book =  {
+export type Book = {
   'Book Id': number;
   Title: string;
   Author: string;
@@ -6,8 +6,19 @@ export type Book =  {
   ISBN13: number;
   'Date Read': string;
   'Author l-f': string;
-  // [x: string | number | symbol]: unknown;
-}
+};
+
+export type SearchResult = {
+  start: number;
+  num_found: number;
+  docs: Doc[];
+};
+
+export type Doc = {
+  author_name: string[];
+  title: string;
+  isbn?: string[];
+};
 
 export interface AppliedFilter {
   category: 'author' | 'rating' | 'year';
@@ -15,8 +26,8 @@ export interface AppliedFilter {
 }
 
 export type SortType =
-| 'Book Id'
-| 'Title'
-| 'Author'
-| 'My Rating'
-| 'Date Read';
+  | 'Book Id'
+  | 'Title'
+  | 'Author'
+  | 'My Rating'
+  | 'Date Read';

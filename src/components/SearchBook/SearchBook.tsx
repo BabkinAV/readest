@@ -3,7 +3,12 @@ import { Wrapper } from './SearchBook.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from '../Select/Select';
 
+import { SearchResult } from '../../data.model';
+
+import searchData from '../../searchData';
+
 const SearchBook = () => {
+  let data = searchData as SearchResult;
   return (
     <Wrapper className="search">
       <div className="search__title">
@@ -35,7 +40,20 @@ const SearchBook = () => {
           </div>
         </form>
       </div>
-      <div className="search__results">Search results will go here...</div>
+      <div className="search__results-text">
+        <h3 className="search__results-header">Your search results</h3>
+      </div>
+      <div className="search__gallery">
+        {data.docs.slice(0, 10).map((el) => {
+          return (
+            <div>
+              <h4>{el.title}</h4>
+              <p>{el.author_name[0]}</p>
+              <p>{el.isbn ? el.isbn[0] : 'N/A'}</p>
+            </div>
+          );
+        })}
+      </div>
     </Wrapper>
   );
 };

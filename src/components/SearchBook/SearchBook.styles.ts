@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   .search {
-    &__title {
+    &__title, 
+		&__results-text {
       text-align: center;
       font-family: ${(props) => props.theme.fonts.primary};
       padding-top: 20px;
