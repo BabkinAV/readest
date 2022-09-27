@@ -12,10 +12,16 @@ export const Wrapper = styled.div`
 
     &__outer {
       margin-bottom: 80px;
+			padding:  0 40px;
     }
 
     &__results {
     }
+		&__gallery {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+      row-gap: 15px;
+		}
   }
 
   .search-form {
@@ -44,5 +50,6 @@ export const Wrapper = styled.div`
 				color: #fff;
 			}
     }
+		
   }
 `;

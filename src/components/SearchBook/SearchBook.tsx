@@ -2,6 +2,7 @@ import React from 'react';
 import { Wrapper } from './SearchBook.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from '../Select/Select';
+import SearchItem from './SearchItem/SearchItem';
 
 import { SearchResult } from '../../data.model';
 
@@ -44,13 +45,14 @@ const SearchBook = () => {
         <h3 className="search__results-header">Your search results</h3>
       </div>
       <div className="search__gallery">
-        {data.docs.slice(0, 10).map((el) => {
+        {data.docs.slice(0, 20).map((el) => {
           return (
-            <div>
-              <h4>{el.title}</h4>
-              <p>{el.author_name[0]}</p>
-              <p>{el.isbn ? el.isbn[0] : 'N/A'}</p>
-            </div>
+            <SearchItem
+              title={el.title ?? 'Unknown title'}
+              author={el.author_name ? el.author_name[0] : 'Unknown author'}
+              coverId={el.cover_i ??  0}
+              key={el.key}
+            />
           );
         })}
       </div>

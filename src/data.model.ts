@@ -15,8 +15,10 @@ export type SearchResult = {
 };
 
 export type Doc = {
+	key: string;
   author_name: string[];
   title: string;
+	cover_i: number;
   isbn?: string[];
 };
 
