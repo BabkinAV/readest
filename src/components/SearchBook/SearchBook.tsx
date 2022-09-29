@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Wrapper } from './SearchBook.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Select from '../Select/Select';
 import SearchItem from './SearchItem/SearchItem';
 
@@ -10,6 +11,13 @@ import searchData from '../../searchData';
 
 const SearchBook = () => {
   let data = searchData as SearchResult;
+	const [booksList, setBooksList] = useState(data.docs.slice(0, 20));
+
+	const fetchMoreBooks = () => {
+		setTimeout(() => {
+			setBooksList((booksList) => booksList.concat(data.docs.slice(booksList.length, booksList.length + 20)))
+		}, 1500)
+	}
   return (
     <Wrapper className="search">
       <div className="search__title">
@@ -45,16 +53,25 @@ const SearchBook = () => {
         <h3 className="search__results-header">Your search results</h3>
       </div>
       <div className="search__gallery">
-        {data.docs.slice(0, 20).map((el) => {
-          return (
-            <SearchItem
-              title={el.title ?? 'Unknown title'}
-              author={el.author_name ? el.author_name[0] : 'Unknown author'}
-              coverId={el.cover_i ??  0}
-              key={el.key}
-            />
-          );
-        })}
+        <InfiniteScroll 
+				dataLength={booksList.length}
+				next={fetchMoreBooks}
+				hasMore={true}
+				loader={<h4>Loading...</h4>}
+				>
+          {booksList.map((el,index) => 
+					{
+            return (
+              <SearchItem
+                title={el.title ?? 'Unknown title'}
+                author={el.author_name ? el.author_name[0] : 'Unknown author'}
+                coverId={el.cover_i ?? 0}
+                key={el.key}
+              />
+            );
+          }
+					)}
+        </InfiniteScroll>
       </div>
     </Wrapper>
   );

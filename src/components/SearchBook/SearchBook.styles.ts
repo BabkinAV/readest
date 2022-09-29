@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 
     &__results {
     }
-		&__gallery {
+		&__gallery .infinite-scroll-component{
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
       row-gap: 15px;

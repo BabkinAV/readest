@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { StyledSearchItem } from './SearchItem.styles';
 import emptyCover from '../../../assets/images/emptyCover_sm.png';
 
@@ -9,7 +9,7 @@ type SearchItemProps = {
   coverId: number;
 };
 
-const SearchItem: FC<SearchItemProps> = ({
+const SearchItem: React.FC<SearchItemProps> = ({
   title,
   author,
   coverId,
@@ -26,6 +26,7 @@ const SearchItem: FC<SearchItemProps> = ({
                 currentTarget.src=emptyCover;
               }}
               alt={`${title} cover`}
+							loading="lazy"
             />
           
         </div>
