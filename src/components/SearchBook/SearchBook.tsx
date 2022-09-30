@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Select from '../Select/Select';
 import SearchItem from './SearchItem/SearchItem';
+import Spinner from '../Spinner/Spinner';
 
 import { SearchResult } from '../../data.model';
 
@@ -56,8 +57,8 @@ const SearchBook = () => {
         <InfiniteScroll 
 				dataLength={booksList.length}
 				next={fetchMoreBooks}
-				hasMore={true}
-				loader={<h4>Loading...</h4>}
+				hasMore={searchData.docs.length > booksList.length}
+				loader={<div className='search__spinner'><Spinner /></div>}
 				>
           {booksList.map((el,index) => 
 					{
