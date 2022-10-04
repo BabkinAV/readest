@@ -28,9 +28,9 @@ const parseSearchString = (str: string) => {
 };
 
 const SearchBook = () => {
-	//TODO: refactor 2 data list into 1
-  const [booksList, setBooksList] = useState<Doc[]>([]);
   const [dataList, setDataList] = useState<Doc[]>([]);
+
+  const [galleryLength, setGalleryLength] = useState<number>(20);
 
   const [showResults, setShowResults] = useState(false);
 
@@ -40,8 +40,7 @@ const SearchBook = () => {
     axios
       .get<SearchResult>(`http://openlibrary.org/search.json?q=${searchString}`)
       .then((res) => {
-        setBooksList(res.data.docs.slice(0, 20));
-				setDataList(res.data.docs);
+        setDataList(res.data.docs);
       })
       .catch((error: string) => {
         console.log(error);
@@ -52,6 +51,7 @@ const SearchBook = () => {
     event: React.FormEvent<SearchFormElement>
   ) => {
     event.preventDefault();
+		setGalleryLength(20);
     const searchString = event.currentTarget.elements.searchInput.value;
     const searchQuery = parseSearchString(searchString);
     setSearchString(searchQuery);
@@ -60,10 +60,10 @@ const SearchBook = () => {
 
   const fetchMoreBooks = () => {
     setTimeout(() => {
-      setBooksList((booksList) =>
-        booksList.concat(
-          dataList.slice(booksList.length, booksList.length + 20)
-        )
+      setGalleryLength((galleryLength) =>
+        {
+          return galleryLength + 20;
+        }
       );
     }, 1500);
   };
@@ -111,16 +111,16 @@ const SearchBook = () => {
 
           <div className="search__gallery">
             <InfiniteScroll
-              dataLength={booksList.length}
+              dataLength={galleryLength}
               next={fetchMoreBooks}
-              hasMore={searchData.docs.length > booksList.length}
+              hasMore={searchData.docs.length > galleryLength}
               loader={
                 <div className="search__spinner">
                   <Spinner />
                 </div>
               }
             >
-              {booksList.map((el) => {
+              {dataList.slice(0, galleryLength).map((el) => {
                 return (
                   <SearchItem
                     title={el.title ?? 'Unknown title'}
