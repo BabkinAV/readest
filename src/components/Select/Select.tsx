@@ -6,14 +6,16 @@ type Props = {
   children: JSX.Element | JSX.Element[];
   onSelectChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 	className?: string;
+	name: string;
+	id?: string;
 
 };
 
-const Select = ({ children, onSelectChange, className }: Props) => {
+const Select = ({ children, onSelectChange, className, name, id }: Props) => {
   return (
     <StyledSelect className={className}>
       <FontAwesomeIcon icon={['fas', 'caret-down']} />
-      <select name="sort__dropdown" id="sort-select" onChange={onSelectChange}>
+      <select name={name} id={id} onChange={onSelectChange}>
         {children}
       </select>
     </StyledSelect>

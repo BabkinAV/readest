@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledSearchItem = styled.div`
+justify-self: center;
 .search-item {
+
 	&__title {
 		font-family: ${(props) => props.theme.fonts.primary};
 		padding-top: 5px;

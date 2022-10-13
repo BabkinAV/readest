@@ -46,7 +46,7 @@ describe('Add book functionality', () => {
     const bookCoverAct = await screen.findByAltText(
       'Book cover',
       {},
-      { timeout: 4000 }
+      { timeout: 5000 }
     );
     expect(bookCoverAct).toBeInTheDocument();
   });

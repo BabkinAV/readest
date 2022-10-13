@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Wrapper } from './SearchBook.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -13,6 +13,7 @@ import axios from 'axios';
 
 interface FormElements extends HTMLFormControlsCollection {
   searchInput: HTMLInputElement;
+  searchType: HTMLSelectElement;
 }
 interface SearchFormElement extends HTMLFormElement {
   readonly elements: FormElements;
@@ -34,37 +35,37 @@ const SearchBook = () => {
 
   const [showResults, setShowResults] = useState(false);
 
-  const [searchString, setSearchString] = useState<string>('');
 
-  useEffect(() => {
+  const handleSearchFormSubmit = (
+    event: React.FormEvent<SearchFormElement>
+  ) => {
+    event.preventDefault();
+		setDataList([]);
+    setGalleryLength(20);
+    const searchString = event.currentTarget.elements.searchInput.value;
+    const searchType = event.currentTarget.elements.searchType.value;
+
+
+    const searchQuery = parseSearchString(searchString);
+    setShowResults(true);
     axios
-      .get<SearchResult>(`http://openlibrary.org/search.json?q=${searchString}`)
+      .get<SearchResult>(
+        `http://openlibrary.org/search.json?${searchType}=${searchQuery}`
+      )
       .then((res) => {
         setDataList(res.data.docs);
       })
       .catch((error: string) => {
         console.log(error);
       });
-  }, [searchString]);
-
-  const handleSearchFormSubmit = (
-    event: React.FormEvent<SearchFormElement>
-  ) => {
-    event.preventDefault();
-		setGalleryLength(20);
-    const searchString = event.currentTarget.elements.searchInput.value;
-    const searchQuery = parseSearchString(searchString);
-    setSearchString(searchQuery);
-    setShowResults(true);
   };
+
 
   const fetchMoreBooks = () => {
     setTimeout(() => {
-      setGalleryLength((galleryLength) =>
-        {
-          return galleryLength + 20;
-        }
-      );
+      setGalleryLength((galleryLength) => {
+        return galleryLength + 20;
+      });
     }, 1500);
   };
   return (
@@ -94,10 +95,10 @@ const SearchBook = () => {
               </button>
             </div>
             <div className="search-form__select-wrapper">
-              <Select>
-                <option value="">--Please choose search type--</option>
-                <option value="Title">By Title</option>
-                <option value="Author">By Author</option>
+              <Select name="searchType" id="search-type">
+                <option value="q">--Please choose search type--</option>
+                <option value="q">By Title</option>
+                <option value="author">By Author</option>
               </Select>
             </div>
           </div>

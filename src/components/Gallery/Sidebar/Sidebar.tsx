@@ -11,7 +11,6 @@ import {
   yearsSelector,
 } from '../../../store/slices/bookSlice';
 
-
 import { StyledSidebar } from './Sidebar.styles';
 
 import { SortType } from '../../../data.model';
@@ -34,10 +33,13 @@ const Sidebar = () => {
           Sort by:
         </label>
         <Select
-				className="sort__select"
+          className="sort__select"
           onSelectChange={(e) => {
             dispatch(sortData(e.target.value as SortType));
           }}
+					name="sort_dropdown"
+					id="sort-select"
+
         >
           <option value="">--Please choose--</option>
           <option value="Title">Title</option>
