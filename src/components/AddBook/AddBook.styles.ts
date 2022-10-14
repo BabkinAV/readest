@@ -4,7 +4,7 @@ export const StyledAddBook = styled.div`
   .addBook {
     padding-top: 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: minmax(200px, 1fr) 2fr;
     grid-gap: 20px;
     &__image {
       max-width: 300px;
@@ -47,6 +47,11 @@ export const StyledAddBook = styled.div`
           margin-bottom: 40px;
         }
       }
+      @media screen and (max-width: 768px) {
+        &__section {
+          display: block;
+        }
+      }
 
       &__group {
         position: relative;
@@ -78,6 +83,11 @@ export const StyledAddBook = styled.div`
             border: 1px solid #b4b4b4;
           }
         }
+				@media screen and (max-width: 576px) {
+					input {
+						width: 100%;
+					}
+				}
 
         &--isbn {
           input {
@@ -90,7 +100,7 @@ export const StyledAddBook = styled.div`
             color: #ff0000;
           }
           input {
-            border: 1px solid #ff0000
+            border: 1px solid #ff0000;
           }
         }
 
@@ -102,21 +112,27 @@ export const StyledAddBook = styled.div`
           color: #ff0000;
           font-size: 14px;
           font-family: ${(props) => props.theme.fonts.primary};
-          
         }
-
       }
       &__info {
         padding-bottom: 10px;
         font-family: ${(props) => props.theme.fonts.primary};
         font-size: 14px;
         font-weight: 400;
-
       }
       &__button {
         &--save {
           margin-right: 30px;
         }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .addBook {
+      display: block;
+      &__image {
+        max-width: 200px;
+        margin: 0 auto;
       }
     }
   }
