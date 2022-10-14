@@ -50,7 +50,7 @@ const SearchBook = () => {
     setShowResults(true);
     axios
       .get<SearchResult>(
-        `http://openlibrary.org/search.json?${searchType}=${searchQuery}`
+        `https://openlibrary.org/search.json?${searchType}=${searchQuery}`
       )
       .then((res) => {
         setDataList(res.data.docs);
