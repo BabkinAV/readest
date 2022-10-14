@@ -15,20 +15,24 @@ export const Wrapper = styled.div`
       padding: 0 40px;
     }
 
-    &__results {
-    }
+		@media screen and (max-width: 768px) {
+			&__outer {
+				margin-bottom: 30px;
+			}
+		}
+
     &__gallery .infinite-scroll-component {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       row-gap: 15px;
     }
 
     &__spinner {
       position: relative;
-			height: 30px;
+      height: 30px;
       .spinner {
         position: absolute;
-				left: 100px;
+        left: 100px;
       }
     }
   }
@@ -41,6 +45,12 @@ export const Wrapper = styled.div`
     &__input-wrapper {
       margin-right: 80px;
     }
+    @media screen and (max-width: 992px) {
+      &__input-wrapper {
+        margin-right: 40px;
+      }
+    }
+
     &__input {
       border: 1px solid #336b75;
       height: 35px;
@@ -57,6 +67,18 @@ export const Wrapper = styled.div`
       cursor: pointer;
       svg {
         color: #fff;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      &__content {
+        flex-direction: column;
+      }
+      &__input-wrapper {
+        margin-right: 0;
+        margin-bottom: 50px;
+      }
+      &__input {
+        width: calc(100% - 40px);
       }
     }
   }
