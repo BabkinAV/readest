@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledGalleryItem = styled.div`
+  justify-self: center;
   .gallery-item {
     &__title {
       font-family: ${(props) => props.theme.fonts.primary};

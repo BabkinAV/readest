@@ -12,7 +12,19 @@ export const Wrapper = styled.nav`
     .navigation__item {
       
       display: inline-block;
+			
     }
+		@media screen and (max-width: 576px) {
+			.navigation__item {
+				display: block;
+				text-align: left;
+				padding-left: 30px;
+			}
+			.navigation__item:not(:last-child) {
+				margin-bottom: 15px;
+			}
+			
+		}
     .navigation__item a{
       margin-right: 15px;
       color: ${(props) => props.theme.colors.green};

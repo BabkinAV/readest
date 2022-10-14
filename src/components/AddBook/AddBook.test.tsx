@@ -25,7 +25,7 @@ describe('Add book functionality', () => {
     expect(headingForm).toBeInTheDocument();
   });
 
-  test('getting book cover', async () => {
+  test.skip('getting book cover', async () => {
     renderForm();
     const isbnInput = screen.getByRole('textbox', {
       name: 'ISBN code (for book cover)',
