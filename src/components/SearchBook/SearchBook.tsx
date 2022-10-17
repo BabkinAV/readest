@@ -8,7 +8,7 @@ import Spinner from '../Spinner/Spinner';
 
 import { SearchResult, Doc } from '../../data.model';
 
-// import searchData from '../../searchData';
+
 import axios from 'axios';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -114,7 +114,7 @@ const SearchBook = () => {
             <InfiniteScroll
               dataLength={galleryLength}
               next={fetchMoreBooks}
-              hasMore={dataList.length > galleryLength}
+              hasMore={(dataList.length === 0 || dataList.length > galleryLength)}
               loader={
                 <div className="search__spinner">
                   <Spinner />
