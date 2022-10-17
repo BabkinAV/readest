@@ -7,6 +7,7 @@ import Gallery from './components/Gallery/Gallery';
 import AddBook from './components/AddBook/AddBook';
 import SearchBook from './components/SearchBook/SearchBook';
 import SingleBook from './components/SingleBook/SingleBook';
+import Footer from './components/layout/Footer/Footer';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           </Routes>
         </Container>
       </main>
+			<Footer />
     </div>
   );
 }

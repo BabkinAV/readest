@@ -15,6 +15,10 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: 15px;
     margin-bottom: 15px;
   }
+
+	main {
+		margin-bottom: 20px;
+	}
     
     
     `;
