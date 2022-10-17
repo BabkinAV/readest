@@ -1,12 +1,22 @@
 @import-normalize;
 
 html {
-	overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 body {
   margin: 0;
+  
 }
+
+.App {
+	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
 
 
 *,
@@ -16,8 +26,5 @@ body {
 }
 
 body {
-	font-family: 'Source Sans Pro',sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
-
-
-
