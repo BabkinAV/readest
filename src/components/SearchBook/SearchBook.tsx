@@ -8,7 +8,6 @@ import Spinner from '../Spinner/Spinner';
 
 import { SearchResult, Doc } from '../../data.model';
 
-
 import axios from 'axios';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -35,16 +34,17 @@ const SearchBook = () => {
 
   const [showResults, setShowResults] = useState(false);
 
+  const [showGallery, setShowGallery] = useState(false);
 
   const handleSearchFormSubmit = (
     event: React.FormEvent<SearchFormElement>
   ) => {
     event.preventDefault();
-		setDataList([]);
+    setShowGallery(true);
+    setDataList([]);
     setGalleryLength(20);
     const searchString = event.currentTarget.elements.searchInput.value;
     const searchType = event.currentTarget.elements.searchType.value;
-
 
     const searchQuery = parseSearchString(searchString);
     setShowResults(true);
@@ -53,13 +53,14 @@ const SearchBook = () => {
         `https://openlibrary.org/search.json?${searchType}=${searchQuery}`
       )
       .then((res) => {
-        setDataList(res.data.docs);
+        res.data.docs.length > 0
+          ? setDataList(res.data.docs)
+          : setShowGallery(false);
       })
       .catch((error: string) => {
         console.log(error);
       });
   };
-
 
   const fetchMoreBooks = () => {
     setTimeout(() => {
@@ -109,32 +110,37 @@ const SearchBook = () => {
           <div className="search__results-text">
             <h3 className="search__results-header">Your search results</h3>
           </div>
-
-          <div className="search__gallery">
-            <InfiniteScroll
-              dataLength={galleryLength}
-              next={fetchMoreBooks}
-              hasMore={(dataList.length === 0 || dataList.length > galleryLength)}
-              loader={
-                <div className="search__spinner">
-                  <Spinner />
-                </div>
-              }
-            >
-              {dataList.slice(0, galleryLength).map((el) => {
-                return (
-                  <SearchItem
-                    title={el.title ?? 'Unknown title'}
-                    author={
-                      el.author_name ? el.author_name[0] : 'Unknown author'
-                    }
-                    coverId={el.cover_i ?? 0}
-                    key={el.key}
-                  />
-                );
-              })}
-            </InfiniteScroll>
-          </div>
+          {showGallery ? (
+            <div className="search__gallery">
+              <InfiniteScroll
+                dataLength={galleryLength}
+                next={fetchMoreBooks}
+                hasMore={
+                  dataList.length === 0 || dataList.length > galleryLength
+                }
+                loader={
+                  <div className="search__spinner">
+                    <Spinner />
+                  </div>
+                }
+              >
+                {dataList.slice(0, galleryLength).map((el) => {
+                  return (
+                    <SearchItem
+                      title={el.title ?? 'Unknown title'}
+                      author={
+                        el.author_name ? el.author_name[0] : 'Unknown author'
+                      }
+                      coverId={el.cover_i ?? 0}
+                      key={el.key}
+                    />
+                  );
+                })}
+              </InfiniteScroll>
+            </div>
+          ) : (
+            <p>No result has been found. Please refine your search.</p>
+          )}
         </div>
       )}
     </Wrapper>
