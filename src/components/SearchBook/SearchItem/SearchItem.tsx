@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { StyledSearchItem } from './SearchItem.styles';
 import emptyCover from '../../../assets/images/emptyCover_sm.png';
 
@@ -9,26 +10,33 @@ type SearchItemProps = {
   coverId: number;
 };
 
-const SearchItem: React.FC<SearchItemProps> = ({
-  title,
-  author,
-  coverId,
-}) => {
+const SearchItem: React.FC<SearchItemProps> = ({ title, author, coverId }) => {
+  let navigate = useNavigate();
+  const onItemClick = () => {
+    navigate(
+      `/add/?title=${encodeURIComponent(title)}&author=${encodeURIComponent(
+        author
+      )}`
+    );
+  };
   return (
     <StyledSearchItem className="search-item">
       <div className="search-item__wrapper">
         <div className="search-item__image">
-          
-            <img
-              src={coverId === 0 ? emptyCover :`https://covers.openlibrary.org/b/id/${coverId}-M.jpg?default=false`}
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src=emptyCover;
-              }}
-              alt={`${title} cover`}
-							loading="lazy"
-            />
-          
+          <img
+            src={
+              coverId === 0
+                ? emptyCover
+                : `https://covers.openlibrary.org/b/id/${coverId}-M.jpg?default=false`
+            }
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src = emptyCover;
+            }}
+            onClick={onItemClick}
+            alt={`${title} cover`}
+            loading="lazy"
+          />
         </div>
         <div className="search-item__title">
           <span>
@@ -38,7 +46,6 @@ const SearchItem: React.FC<SearchItemProps> = ({
         <div className="search-item__author">
           <span>{author}</span>
         </div>
-        
       </div>
     </StyledSearchItem>
   );

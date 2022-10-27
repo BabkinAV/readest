@@ -11,9 +11,13 @@ import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
 import StarRatingInput from './StarRatingInput/StarRatingInput';
 import { useInput } from '../../helpers/hooks/useInput';
+import { useSearchBookParams } from '../../helpers/hooks/useSearchBookParams';
 
 const AddBook = () => {
   let navigate = useNavigate();
+
+  const { queryTitle, queryFirstName, queryLastName } = useSearchBookParams();
+
   const dispatch = useAppDispatch();
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const [isBookUploading, setIsBookUploading] = useState(false);
@@ -31,7 +35,8 @@ const AddBook = () => {
     hasError: titleHasError,
     inputBlurHandler: titleBlurHandler,
     reset: titleReset,
-  } = useInput('', isNotEmpty);
+  } = useInput(queryTitle, isNotEmpty);
+  // } = useInput('', isNotEmpty);
 
   const {
     value: isbnValue,
@@ -45,7 +50,8 @@ const AddBook = () => {
     value: firstNameValue,
     valueChangeHandler: firstNameChangeHandler,
     reset: firstNameReset,
-  } = useInput('', () => true);
+  } = useInput(queryFirstName, () => true);
+  // } = useInput('', () => true);
 
   const {
     value: lastNameValue,
@@ -54,7 +60,8 @@ const AddBook = () => {
     hasError: lastNameHasError,
     inputBlurHandler: lastNameBlurHandler,
     reset: lastNameReset,
-  } = useInput('', isNotEmpty);
+  } = useInput(queryLastName, isNotEmpty);
+  // } = useInput('', isNotEmpty);
 
   const {
     value: dateReadValue,
@@ -245,13 +252,14 @@ const AddBook = () => {
             <div
               className={`addBook-form__group ${
                 dateReadHasError && 'hasError'
-              }`} data-testid="date-wrapper"
+              }`}
+              data-testid="date-wrapper"
             >
               <label htmlFor="date-read">Date Read*</label>
               <input
                 type="date"
                 id="date-read"
-								data-testid="input-date"
+                data-testid="input-date"
                 onBlur={dateReadBlurHandler}
                 onChange={dateReadChangeHandler}
                 value={dateReadValue}

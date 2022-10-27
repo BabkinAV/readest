@@ -9,7 +9,7 @@ import App from '../../App';
 const renderForm = () => {
   render(<App />);
   const menuEl = screen.getByRole('link', {
-    name: 'Add custom Book',
+    name: 'Add Book',
   });
   userEvent.click(menuEl);
 };
@@ -94,7 +94,7 @@ describe('Add book functionality', () => {
     );
     expect(galleryItems).toHaveLength(13);
     const menuEl = screen.getByRole('link', {
-      name: 'Add custom Book',
+      name: 'Add Book',
     });
     userEvent.click(menuEl);
 

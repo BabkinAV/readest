@@ -13,7 +13,7 @@ const TopNavigation = () => {
           <NavLink to="/search">Search for new Book</NavLink>
         </li>
         <li className="navigation__item">
-          <NavLink to="/add">Add custom Book</NavLink>
+          <NavLink to="/add">Add Book</NavLink>
         </li>
       </ul>
     </Wrapper>

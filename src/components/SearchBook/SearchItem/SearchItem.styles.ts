@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const StyledSearchItem = styled.div`
 justify-self: center;
+
 .search-item {
+	
 
 	&__title {
 		font-family: ${(props) => props.theme.fonts.primary};
@@ -17,6 +19,7 @@ justify-self: center;
 		padding-bottom: 5px;
 	}
 	&__image {
+		cursor: pointer;
 		img {
 			height: 200px;
 			width: 135px;
