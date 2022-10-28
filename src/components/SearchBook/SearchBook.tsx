@@ -131,6 +131,7 @@ const SearchBook = () => {
                       author={
                         el.author_name ? el.author_name[0] : 'Unknown author'
                       }
+                      isbn={el.isbn ? el.isbn[0] : ''}
                       coverId={el.cover_i ?? 0}
                       key={el.key}
                     />

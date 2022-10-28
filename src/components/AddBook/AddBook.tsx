@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //Redux stuff
@@ -11,9 +11,13 @@ import emptyCover from '../../assets/images/emptyCover_md.png';
 import Button from '../Button/Button';
 import StarRatingInput from './StarRatingInput/StarRatingInput';
 import { useInput } from '../../helpers/hooks/useInput';
+import { useSearchBookParams } from '../../helpers/hooks/useSearchBookParams';
 
 const AddBook = () => {
   let navigate = useNavigate();
+
+  const { queryTitle, queryFirstName, queryLastName, queryIsbn } = useSearchBookParams();
+
   const dispatch = useAppDispatch();
   const [isCoverLoading, setIsCoverLoading] = useState(false);
   const [isBookUploading, setIsBookUploading] = useState(false);
@@ -31,7 +35,7 @@ const AddBook = () => {
     hasError: titleHasError,
     inputBlurHandler: titleBlurHandler,
     reset: titleReset,
-  } = useInput('', isNotEmpty);
+  } = useInput(queryTitle, isNotEmpty);
 
   const {
     value: isbnValue,
@@ -39,13 +43,13 @@ const AddBook = () => {
     hasError: isbnHasError,
     inputBlurHandler: isbnBlurHandler,
     reset: isbnReset,
-  } = useInput('', isISBN);
+  } = useInput(queryIsbn, isISBN);
 
   const {
     value: firstNameValue,
     valueChangeHandler: firstNameChangeHandler,
     reset: firstNameReset,
-  } = useInput('', () => true);
+  } = useInput(queryFirstName, () => true);
 
   const {
     value: lastNameValue,
@@ -54,7 +58,7 @@ const AddBook = () => {
     hasError: lastNameHasError,
     inputBlurHandler: lastNameBlurHandler,
     reset: lastNameReset,
-  } = useInput('', isNotEmpty);
+  } = useInput(queryLastName, isNotEmpty);
 
   const {
     value: dateReadValue,
@@ -109,8 +113,8 @@ const AddBook = () => {
     dateReadReset();
     setRating(0);
   };
-  const getBookCoverHandler = (event: React.SyntheticEvent) => {
-    event.preventDefault();
+  const getBookCoverHandler = (event?: React.SyntheticEvent) => {
+    event && event.preventDefault();
     setIsCoverLoading(true);
     if (isbnValue) {
       axios
@@ -137,6 +141,13 @@ const AddBook = () => {
 
   const isbnRef = useRef(null);
   const [isbn, setIsbn] = useState<string>(emptyCover);
+
+	useEffect(()=>{
+		if (queryIsbn) {
+			getBookCoverHandler();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
   return (
     <StyledAddBook>
@@ -245,13 +256,14 @@ const AddBook = () => {
             <div
               className={`addBook-form__group ${
                 dateReadHasError && 'hasError'
-              }`} data-testid="date-wrapper"
+              }`}
+              data-testid="date-wrapper"
             >
               <label htmlFor="date-read">Date Read*</label>
               <input
                 type="date"
                 id="date-read"
-								data-testid="input-date"
+                data-testid="input-date"
                 onBlur={dateReadBlurHandler}
                 onChange={dateReadChangeHandler}
                 value={dateReadValue}
