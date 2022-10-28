@@ -19,7 +19,7 @@ export type Doc = {
   author_name: string[];
   title: string;
 	cover_i: number;
-  isbn?: string[];
+  isbn: string[];
 };
 
 export interface AppliedFilter {

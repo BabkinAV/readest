@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //Redux stuff
@@ -16,7 +16,7 @@ import { useSearchBookParams } from '../../helpers/hooks/useSearchBookParams';
 const AddBook = () => {
   let navigate = useNavigate();
 
-  const { queryTitle, queryFirstName, queryLastName } = useSearchBookParams();
+  const { queryTitle, queryFirstName, queryLastName, queryIsbn } = useSearchBookParams();
 
   const dispatch = useAppDispatch();
   const [isCoverLoading, setIsCoverLoading] = useState(false);
@@ -36,7 +36,6 @@ const AddBook = () => {
     inputBlurHandler: titleBlurHandler,
     reset: titleReset,
   } = useInput(queryTitle, isNotEmpty);
-  // } = useInput('', isNotEmpty);
 
   const {
     value: isbnValue,
@@ -44,14 +43,13 @@ const AddBook = () => {
     hasError: isbnHasError,
     inputBlurHandler: isbnBlurHandler,
     reset: isbnReset,
-  } = useInput('', isISBN);
+  } = useInput(queryIsbn, isISBN);
 
   const {
     value: firstNameValue,
     valueChangeHandler: firstNameChangeHandler,
     reset: firstNameReset,
   } = useInput(queryFirstName, () => true);
-  // } = useInput('', () => true);
 
   const {
     value: lastNameValue,
@@ -61,7 +59,6 @@ const AddBook = () => {
     inputBlurHandler: lastNameBlurHandler,
     reset: lastNameReset,
   } = useInput(queryLastName, isNotEmpty);
-  // } = useInput('', isNotEmpty);
 
   const {
     value: dateReadValue,
@@ -116,8 +113,8 @@ const AddBook = () => {
     dateReadReset();
     setRating(0);
   };
-  const getBookCoverHandler = (event: React.SyntheticEvent) => {
-    event.preventDefault();
+  const getBookCoverHandler = (event?: React.SyntheticEvent) => {
+    event && event.preventDefault();
     setIsCoverLoading(true);
     if (isbnValue) {
       axios
@@ -144,6 +141,13 @@ const AddBook = () => {
 
   const isbnRef = useRef(null);
   const [isbn, setIsbn] = useState<string>(emptyCover);
+
+	useEffect(()=>{
+		if (queryIsbn) {
+			getBookCoverHandler();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
   return (
     <StyledAddBook>

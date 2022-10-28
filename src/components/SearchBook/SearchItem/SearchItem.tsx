@@ -8,14 +8,22 @@ type SearchItemProps = {
   title: string;
   author: string;
   coverId: number;
+  isbn: string;
 };
 
-const SearchItem: React.FC<SearchItemProps> = ({ title, author, coverId }) => {
+const SearchItem: React.FC<SearchItemProps> = ({
+  title,
+  author,
+  coverId,
+  isbn,
+}) => {
   let navigate = useNavigate();
   const onItemClick = () => {
     navigate(
       `/add/?title=${encodeURIComponent(title)}&author=${encodeURIComponent(
         author
+      )}&isbn=${encodeURIComponent(
+        isbn
       )}`
     );
   };
