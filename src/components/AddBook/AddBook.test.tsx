@@ -72,7 +72,6 @@ describe('Add book functionality', () => {
     expect(lastNameInputWrapper).toHaveClass('hasError');
     expect(dateReadInputWrapper).toHaveClass('hasError');
 
-    //TODO: Test clear button functionality
 
     const clearBtn = screen.getByRole('button', { name: /clear/i });
 

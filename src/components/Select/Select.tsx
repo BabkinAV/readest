@@ -8,14 +8,15 @@ type Props = {
 	className?: string;
 	name: string;
 	id?: string;
+	accessibleName?: string;
 
 };
 
-const Select = ({ children, onSelectChange, className, name, id }: Props) => {
+const Select = ({ children, onSelectChange, className, name, id, accessibleName }: Props) => {
   return (
     <StyledSelect className={className}>
       <FontAwesomeIcon icon={['fas', 'caret-down']} />
-      <select name={name} id={id} onChange={onSelectChange}>
+      <select name={name} id={id} onChange={onSelectChange} aria-label={accessibleName}>
         {children}
       </select>
     </StyledSelect>

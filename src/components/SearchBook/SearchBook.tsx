@@ -83,12 +83,13 @@ const SearchBook = () => {
           <div className="search-form__content">
             <div className="search-form__input-wrapper">
               <input
-                type="text"
                 name="searchInput"
+                aria-label="search-input"
+                type="text"
                 className="search-form__input"
                 placeholder="Enter text"
               />
-              <button className="search-form__button" type="submit">
+              <button className="search-form__button" type="submit" aria-label='search'>
                 <FontAwesomeIcon
                   icon={['fas', 'magnifying-glass']}
                   data-testid="star-filled"
@@ -96,7 +97,11 @@ const SearchBook = () => {
               </button>
             </div>
             <div className="search-form__select-wrapper">
-              <Select name="searchType" id="search-type">
+              <Select
+                name="searchType"
+                id="search-type"
+                accessibleName="search-type"
+              >
                 <option value="q">--Please choose search type--</option>
                 <option value="q">By Title</option>
                 <option value="author">By Author</option>
